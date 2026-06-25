@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mani Deep Portfolio</title>
-    <!-- Load External CSS and Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -18,18 +17,12 @@
     <link rel="shortcut icon" href="favicon.png" />
 
     <style>
-      /* Custom Variables and Global Styles */
       :root {
         --primary-color: #1a1a1a;
-        /* Dark background */
         --secondary-color: #242424;
-        /* Slightly lighter dark for sections */
         --accent-color: #10b981;
-        /* Emerald 500 */
         --text-color: #f3f4f6;
-        /* Light text */
         --sub-text-color: #9ca3af;
-        /* Gray 400 */
       }
 
       body {
@@ -40,7 +33,6 @@
         scroll-behavior: smooth;
       }
 
-      /* Utility classes (in case Tailwind is not fully applied) */
       .section-padding {
         padding: 4rem 1rem;
       }
@@ -56,15 +48,15 @@
         color: var(--accent-color);
       }
 
-      /* Card Styling */
       .card {
         background-color: var(--secondary-color);
         border-radius: 0.75rem;
         padding: 1.5rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         border: 1px solid #374151;
-        /* Gray 700 */
-        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        transition:
+          transform 0.3s ease-in-out,
+          box-shadow 0.3s ease-in-out;
       }
 
       .card:hover {
@@ -72,7 +64,6 @@
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
       }
 
-      /* Navigation Bar Styles */
       nav {
         background-color: var(--primary-color);
         position: sticky;
@@ -94,7 +85,6 @@
         font-size: 1.5rem;
         font-weight: 700;
       }
-
       .logo span {
         color: var(--accent-color);
       }
@@ -137,7 +127,6 @@
         color: var(--accent-color);
       }
 
-      /* Dropdown Menu (Mobile) */
       .dropdown {
         position: fixed;
         top: 0;
@@ -169,7 +158,6 @@
         font-size: 1.5rem;
         color: var(--text-color);
       }
-
       .dropdown .cancel {
         position: absolute;
         top: 2rem;
@@ -178,7 +166,6 @@
         cursor: pointer;
       }
 
-      /* Hero Section (#home) */
       #home {
         min-height: 90vh;
         display: flex;
@@ -217,7 +204,6 @@
         font-weight: 600;
         margin-bottom: 1.5rem;
         min-height: 2rem;
-        /* Ensure space for the text */
       }
 
       .typewriter-text {
@@ -247,7 +233,6 @@
         display: block;
       }
 
-      /* Social Links */
       .social-links {
         display: flex;
         gap: 1rem;
@@ -265,7 +250,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: background-color 0.3s, transform 0.3s;
+        transition:
+          background-color 0.3s,
+          transform 0.3s;
       }
 
       .social-links a:hover {
@@ -274,14 +261,15 @@
         transform: scale(1.1);
       }
 
-      /* Button Styling */
       .btn button {
         background-color: var(--accent-color);
         color: var(--primary-color);
         padding: 0.75rem 2rem;
         border-radius: 9999px;
         font-weight: 600;
-        transition: transform 0.3s, box-shadow 0.3s;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
         border: none;
         cursor: pointer;
         box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
@@ -299,7 +287,9 @@
         padding: 0.75rem 2rem;
         border-radius: 9999px;
         font-weight: 600;
-        transition: transform 0.3s, box-shadow 0.3s;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
         border: none;
         cursor: pointer;
         box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
@@ -312,14 +302,11 @@
         box-shadow: 0 8px 20px rgba(16, 185, 129, 0.6);
       }
 
-      /* Form Styling for Contact Section */
       .input-field {
         width: 100%;
         padding: 0.75rem;
         background-color: #374151;
-        /* Gray 700 */
         border: 1px solid #4b5563;
-        /* Gray 600 */
         border-radius: 0.5rem;
         color: var(--text-color);
         transition: border-color 0.3s;
@@ -330,33 +317,93 @@
         border-color: var(--accent-color);
       }
 
-      /* Confirmation Message Styling */
       .confirmation-message {
         margin-top: 1rem;
         padding: 0.75rem;
         border-radius: 0.5rem;
         background-color: #065f46;
-        /* Green-800 */
         color: var(--text-color);
         text-align: center;
       }
 
-      /* Media Queries for Responsiveness */
+      /* Timeline */
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0.5rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--accent-color);
+        opacity: 0.3;
+      }
+      .timeline-item {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -1.6rem;
+        top: 1.2rem;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        border: 2px solid var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+      }
+
+      /* Tech pills */
+      .tech-pill {
+        display: inline-block;
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--accent-color);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        border-radius: 9999px;
+        padding: 0.2rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin: 0.2rem 0.1rem;
+      }
+
+      /* Stat badge */
+      .stat-badge {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        text-align: center;
+      }
+      .stat-badge .stat-number {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--accent-color);
+        display: block;
+      }
+      .stat-badge .stat-label {
+        font-size: 0.7rem;
+        color: var(--sub-text-color);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
       @media (max-width: 1024px) {
         .main-container {
           flex-direction: column-reverse;
           text-align: center;
           gap: 2rem;
         }
-
         .content h1 {
           font-size: 2.5rem;
         }
-
         .social-links {
           justify-content: center;
         }
-
         .image {
           max-width: 80%;
         }
@@ -366,11 +413,9 @@
         .links {
           display: none;
         }
-
         .hamburg {
           display: block;
         }
-
         .main-container {
           padding-top: 2rem;
         }
@@ -380,48 +425,14 @@
         .content h1 {
           font-size: 2rem;
         }
-
         .typewriter {
           font-size: 1.25rem;
         }
-
         .section-title {
           font-size: 2rem;
         }
-
-        /* Make project cards stack on mobile */
         .project-grid {
           grid-template-columns: 1fr;
-        }
-
-        .btn-row {
-          display: flex;
-          gap: 15px;
-        }
-
-        .btn-primary {
-          padding: 12px 30px;
-          background: #00aaff;
-          color: #fff;
-          border: none;
-          border-radius: 8px;
-          font-size: 18px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: 0.3s ease;
-          text-decoration: none;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .btn-primary:hover {
-          background: #0077cc;
-          transform: translateY(-2px);
-        }
-
-        .btn-primary:active {
-          transform: scale(0.97);
         }
       }
     </style>
@@ -434,8 +445,6 @@
         <div class="logo" data-aos="zoom-in" data-aos-duration="1500">
           Indla <span>Mani Deep</span>
         </div>
-
-        <!-- Desktop Links -->
         <div class="links">
           <div
             class="link"
@@ -467,7 +476,7 @@
             data-aos-duration="1500"
             data-aos-delay="400"
           >
-            <a href="#services" class="nav-link">Services</a>
+            <a href="#experience" class="nav-link">Experience</a>
           </div>
           <div
             class="link"
@@ -475,37 +484,41 @@
             data-aos-duration="1500"
             data-aos-delay="500"
           >
+            <a href="#projects" class="nav-link">Projects</a>
+          </div>
+          <div
+            class="link"
+            data-aos="fade-up"
+            data-aos-duration="1500"
+            data-aos-delay="600"
+          >
             <a href="#contact" class="nav-link">Contact</a>
           </div>
         </div>
-
-        <!-- Hamburger Icon (Mobile) -->
         <i class="fa-solid fa-bars hamburg" onclick="hamburg()"></i>
       </div>
-
-      <!-- Dropdown Menu (Mobile) -->
       <div class="dropdown" id="mobile-menu">
         <div class="links">
           <a href="#home" onclick="cancel()">Home</a>
           <a href="#about" onclick="cancel()">About</a>
           <a href="#skills" onclick="cancel()">Skills</a>
-          <a href="#services" onclick="cancel()">Services</a>
+          <a href="#experience" onclick="cancel()">Experience</a>
+          <a href="#projects" onclick="cancel()">Projects</a>
           <a href="#contact" onclick="cancel()">Contact</a>
-
           <i class="fa-solid fa-xmark cancel" onclick="cancel()"></i>
         </div>
       </div>
     </nav>
 
-    <!-- 1. Hero Section (Home) -->
+    <!-- 1. Hero Section -->
     <section id="home">
       <div class="main-container">
-        <!-- Image Area: Updated to use the uploaded image -->
         <div class="image" data-aos="zoom-out" data-aos-duration="3000">
-          <img src="Photo.jpg" alt="Portrait of Mani Deep, a web developer" />
+          <img
+            src="Photo.jpg"
+            alt="Portrait of Mani Deep, a software engineer"
+          />
         </div>
-
-        <!-- Content Area (Updated based on CV) -->
         <div class="content">
           <h1
             data-aos="fade-left"
@@ -514,7 +527,6 @@
           >
             Hey I'm <span>Mani Deep</span>
           </h1>
-
           <div
             class="typewriter"
             data-aos="fade-right"
@@ -523,24 +535,18 @@
           >
             I'm a <span class="typewriter-text"></span>
           </div>
-
           <p
             data-aos="fade-right"
             data-aos-duration="1500"
             data-aos-delay="1100"
           >
-            I am an aspiring <b>Computer Science and Engineering</b> student
-            dedicated to <b>Full-Stack Web Development</b>. Proficient in
-            <b>Python</b>, <b>JavaScript</b>, and core web technologies, I
-            combine academic knowledge with practical skills in
-            <b>responsive design</b> and <b>problem-solving</b>. I am set to
-            embark on a Web Development Internship in <b>September 2025</b> to
-            gain industry experience, and I am driven to build efficient,
-            scalable, and impactful digital experiences.
+            Computer Science undergraduate with hands-on experience in
+            <b>full-stack development</b> using the MERN stack. Built real-world
+            applications involving <b>REST APIs</b>, <b>real-time systems</b>,
+            and <b>payment integration</b>. Passionate about scalable software,
+            AI-powered applications, and solving problems that matter.
           </p>
-
           <div class="social-links">
-            <!-- Social Icons -->
             <a
               href="https://github.com/manideep1822"
               target="_blank"
@@ -549,18 +555,18 @@
               data-aos-delay="1300"
               aria-label="GitHub profile"
             >
-              <i class="fa-brands fa-github"></i
-            ></a>
+              <i class="fa-brands fa-github"></i>
+            </a>
             <a
               href="https://www.instagram.com/mani._.deep.__/"
-              target="_blank "
+              target="_blank"
               data-aos="fade-up"
               data-aos-duration="1500"
               data-aos-delay="1400"
               aria-label="Instagram profile"
             >
-              <i class="fa-brands fa-instagram"></i
-            ></a>
+              <i class="fa-brands fa-instagram"></i>
+            </a>
             <a
               href="https://www.facebook.com/profile.php?id=100070133442011"
               target="_blank"
@@ -569,8 +575,8 @@
               data-aos-delay="1500"
               aria-label="Facebook profile"
             >
-              <i class="fa-brands fa-facebook"></i
-            ></a>
+              <i class="fa-brands fa-facebook"></i>
+            </a>
             <a
               href="https://www.linkedin.com/in/manideep-developer/"
               target="_blank"
@@ -579,35 +585,35 @@
               data-aos-delay="1600"
               aria-label="LinkedIn profile"
             >
-              <i class="fa-brands fa-linkedin"></i
-            ></a>
+              <i class="fa-brands fa-linkedin"></i>
+            </a>
           </div>
-
           <div
             class="btn"
             data-aos="zoom-in"
             data-aos-duration="1500"
             data-aos-delay="1800"
           >
-            <!-- Updated to use smooth scrolling, though it was already correct -->
             <button
-              onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });"
+              onclick="
+                document
+                  .getElementById('contact')
+                  .scrollIntoView({ behavior: 'smooth' })
+              "
             >
               Hire me
             </button>
-
-            <a href="ManiDeep_CV.pdf" download class="btn"> Download CV </a>
+            <a href="ManiDeep_CV.pdf" download class="btn">Download CV</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. About Section (Expanded) -->
+    <!-- 2. About Section -->
     <section id="about" class="section-padding">
       <div class="max-w-6xl mx-auto">
         <h2 class="section-title" data-aos="fade-up">About <span>Me</span></h2>
         <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
-          <!-- Summary Card -->
           <div
             class="card lg:col-span-1"
             data-aos="fade-right"
@@ -617,24 +623,33 @@
               Professional Summary
             </h3>
             <p class="text-gray-300 mb-4">
-              I am Mani Deep, a dedicated B.Tech student specializing in
-              <b>Computer Science and Engineering</b>
-              at Lovely Professional University (2024–2028). I possess a strong
-              foundational knowledge in
-              <b>Python</b>, <b>JavaScript</b>, and <b>C++</b>, and I am
-              passionate about leveraging these skills to build functional and
-              user-centric web solutions.
+              I'm <b>Mani Deep</b>, a B.Tech CSE student at Lovely Professional
+              University (2024–2028). I build full-stack applications with the
+              <b>MERN stack</b>, design <b>REST APIs</b>, and integrate
+              real-time systems. I co-founded <b>WAIVE</b>, a university venture
+              at the intersection of web development and AI, securing seed
+              funding from LPU's incubation centre.
             </p>
             <p class="text-gray-300">
-              My skill set is balanced by key professional abilities, including
-              excellent <b>Problem Solving</b>, <b>Time Management</b>, and a
-              strong commitment to <b>Team Collaboration</b>. I thrive in
-              environments where continuous learning and practical application
-              of knowledge are key.
+              I care about clean architecture, meaningful user experience, and
+              shipping things that actually work in production.
             </p>
+            <div class="grid grid-cols-3 gap-2 mt-5">
+              <div class="stat-badge">
+                <span class="stat-number">4+</span>
+                <span class="stat-label">Projects</span>
+              </div>
+              <div class="stat-badge">
+                <span class="stat-number">96%</span>
+                <span class="stat-label">12th Grade</span>
+              </div>
+              <div class="stat-badge">
+                <span class="stat-number">1</span>
+                <span class="stat-label">Live Client</span>
+              </div>
+            </div>
           </div>
 
-          <!-- Experience & Certificates Card -->
           <div
             class="card lg:col-span-1"
             data-aos="fade-up"
@@ -646,43 +661,51 @@
             </h3>
             <div class="space-y-4">
               <div class="border-b border-gray-700 pb-3">
-                <p class="font-semibold text-white">Web Development Intern</p>
+                <p class="font-semibold text-white">Founder & CEO — WAIVE</p>
                 <p class="text-sm text-gray-400 italic">
-                  SkillCraft Technology | Sep 2025 – Oct 2025
+                  Lovely Professional University | Feb 2025 – Jan 2026
                 </p>
                 <ul
                   class="list-disc list-inside text-xs text-gray-500 ml-4 mt-1"
                 >
                   <li>
-                    Accepted offer for an educational internship to gain
-                    hands-on industry experience.
+                    Founded venture integrating web dev & AI across 2 core
+                    domains.
+                  </li>
+                  <li>Secured seed funding from LPU's incubation centre.</li>
+                  <li>Evaluated 10+ modern web and AI technologies.</li>
+                </ul>
+              </div>
+              <div class="border-b border-gray-700 pb-3">
+                <p class="font-semibold text-white">Web Development Intern</p>
+                <p class="text-sm text-gray-400 italic">
+                  SkillCraft Technologies | Sep 2025 – Oct 2025
+                </p>
+                <ul
+                  class="list-disc list-inside text-xs text-gray-500 ml-4 mt-1"
+                >
+                  <li>
+                    Built 5+ frontend components with accessibility best
+                    practices.
                   </li>
                   <li>
-                    Focus on working on real-world projects under professional
-                    mentorship.
+                    Resolved 10+ cross-browser layout and responsiveness issues.
                   </li>
                 </ul>
               </div>
-
-              <div class="pt-3">
+              <div class="pt-1">
                 <p class="font-semibold text-white mb-2">Certifications</p>
                 <ul
                   class="list-disc list-inside text-sm text-gray-300 ml-4 space-y-1"
                 >
-                  <li>Programming Using C++ (Infosys Springboard, Aug 2025)</li>
-                  <li>
-                    Python and Django Framework for Beginners (Udemy, Oct 2024)
-                  </li>
-                  <li>
-                    Completion of Effective Time Management (CodingTantra, Oct
-                    2024)
-                  </li>
+                  <li>Programming Using C++ — Infosys Springboard (2025)</li>
+                  <li>Python and Django Framework — Udemy (Oct 2024)</li>
+                  <li>Effective Time Management — CodingTantra (Oct 2024)</li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <!-- Education Card -->
           <div
             class="card lg:col-span-1"
             data-aos="fade-left"
@@ -702,22 +725,24 @@
                   2024 – 2028 (Expected Graduation)
                 </p>
               </li>
-              <li>
+              <li class="border-t border-gray-700 pt-3">
                 <p class="font-semibold">Intermediate Education (12th Grade)</p>
                 <p class="text-sm text-gray-400">
                   Sri Sarada Junior College | Vijayawada, AP
                 </p>
                 <p class="text-xs text-gray-500">
-                  2022 – 2024 | Percentage: 96%
+                  2022 – 2024 | Percentage:
+                  <span class="text-emerald-400 font-bold">96%</span>
                 </p>
               </li>
-              <li>
+              <li class="border-t border-gray-700 pt-3">
                 <p class="font-semibold">Secondary Education (10th Grade)</p>
                 <p class="text-sm text-gray-400">
                   Aravinda High School | Vijayawada, AP
                 </p>
                 <p class="text-xs text-gray-500">
-                  2021 – 2022 | Percentage: 92%
+                  2021 – 2022 | Percentage:
+                  <span class="text-emerald-400 font-bold">92%</span>
                 </p>
               </li>
             </ul>
@@ -732,9 +757,7 @@
         <h2 class="section-title" data-aos="fade-up">
           Technical <span>Skills</span>
         </h2>
-
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-          <!-- Skill Items -->
           <div
             class="card text-center flex flex-col items-center p-6"
             data-aos="zoom-in"
@@ -748,16 +771,16 @@
             class="card text-center flex flex-col items-center p-6"
             data-aos="zoom-in"
             data-aos-duration="800"
-            data-aos-delay="200"
+            data-aos-delay="150"
           >
             <i class="fa-brands fa-css3-alt text-5xl text-blue-600 mb-3"></i>
-            <p class="font-semibold text-lg">CSS3 / RWD</p>
+            <p class="font-semibold text-lg">CSS3</p>
           </div>
           <div
             class="card text-center flex flex-col items-center p-6"
             data-aos="zoom-in"
             data-aos-duration="800"
-            data-aos-delay="300"
+            data-aos-delay="200"
           >
             <i class="fa-brands fa-js text-5xl text-yellow-500 mb-3"></i>
             <p class="font-semibold text-lg">JavaScript</p>
@@ -766,7 +789,43 @@
             class="card text-center flex flex-col items-center p-6"
             data-aos="zoom-in"
             data-aos-duration="800"
+            data-aos-delay="250"
+          >
+            <i class="fa-brands fa-react text-5xl text-cyan-400 mb-3"></i>
+            <p class="font-semibold text-lg">React.js</p>
+          </div>
+          <div
+            class="card text-center flex flex-col items-center p-6"
+            data-aos="zoom-in"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          >
+            <i class="fa-brands fa-node-js text-5xl text-green-500 mb-3"></i>
+            <p class="font-semibold text-lg">Node.js</p>
+          </div>
+          <div
+            class="card text-center flex flex-col items-center p-6"
+            data-aos="zoom-in"
+            data-aos-duration="800"
+            data-aos-delay="350"
+          >
+            <i class="fa-solid fa-server text-5xl text-gray-400 mb-3"></i>
+            <p class="font-semibold text-lg">Express.js</p>
+          </div>
+          <div
+            class="card text-center flex flex-col items-center p-6"
+            data-aos="zoom-in"
+            data-aos-duration="800"
             data-aos-delay="400"
+          >
+            <i class="fa-solid fa-leaf text-5xl text-green-600 mb-3"></i>
+            <p class="font-semibold text-lg">MongoDB</p>
+          </div>
+          <div
+            class="card text-center flex flex-col items-center p-6"
+            data-aos="zoom-in"
+            data-aos-duration="800"
+            data-aos-delay="450"
           >
             <i class="fa-brands fa-python text-5xl text-blue-400 mb-3"></i>
             <p class="font-semibold text-lg">Python</p>
@@ -778,7 +837,16 @@
             data-aos-delay="500"
           >
             <i class="fa-solid fa-code text-5xl text-blue-700 mb-3"></i>
-            <p class="font-semibold text-lg">C++</p>
+            <p class="font-semibold text-lg">C / C++</p>
+          </div>
+          <div
+            class="card text-center flex flex-col items-center p-6"
+            data-aos="zoom-in"
+            data-aos-duration="800"
+            data-aos-delay="550"
+          >
+            <i class="fa-brands fa-java text-5xl text-red-500 mb-3"></i>
+            <p class="font-semibold text-lg">Java</p>
           </div>
           <div
             class="card text-center flex flex-col items-center p-6"
@@ -786,8 +854,17 @@
             data-aos-duration="800"
             data-aos-delay="600"
           >
-            <i class="fa-solid fa-server text-5xl text-green-500 mb-3"></i>
-            <p class="font-semibold text-lg">Django (Beg.)</p>
+            <i class="fa-solid fa-bolt text-5xl text-purple-400 mb-3"></i>
+            <p class="font-semibold text-lg">Socket.IO</p>
+          </div>
+          <div
+            class="card text-center flex flex-col items-center p-6"
+            data-aos="zoom-in"
+            data-aos-duration="800"
+            data-aos-delay="650"
+          >
+            <i class="fa-solid fa-rocket text-5xl text-violet-400 mb-3"></i>
+            <p class="font-semibold text-lg">Vite</p>
           </div>
           <div
             class="card text-center flex flex-col items-center p-6"
@@ -796,7 +873,16 @@
             data-aos-delay="700"
           >
             <i class="fa-brands fa-git-alt text-5xl text-red-600 mb-3"></i>
-            <p class="font-semibold text-lg">Git/GitHub</p>
+            <p class="font-semibold text-lg">Git / GitHub</p>
+          </div>
+          <div
+            class="card text-center flex flex-col items-center p-6"
+            data-aos="zoom-in"
+            data-aos-duration="800"
+            data-aos-delay="750"
+          >
+            <i class="fa-solid fa-flask text-5xl text-orange-400 mb-3"></i>
+            <p class="font-semibold text-lg">Postman</p>
           </div>
           <div
             class="card text-center flex flex-col items-center p-6"
@@ -809,37 +895,342 @@
             ></i>
             <p class="font-semibold text-lg">Problem Solving</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Experience Section (NEW) -->
+    <section id="experience" class="section-padding">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="section-title" data-aos="fade-up">
+          My <span>Experience</span>
+        </h2>
+        <div class="timeline">
           <div
-            class="card text-center flex flex-col items-center p-6"
-            data-aos="zoom-in"
-            data-aos-duration="800"
-            data-aos-delay="900"
+            class="timeline-item card mb-6"
+            data-aos="fade-up"
+            data-aos-duration="1000"
           >
-            <i class="fa-solid fa-clock text-5xl text-yellow-400 mb-3"></i>
-            <p class="font-semibold text-lg">Time Management</p>
+            <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+              <div>
+                <h3 class="text-xl font-bold text-white">Founder & CEO</h3>
+                <p class="text-emerald-400 font-semibold">
+                  WAIVE — Web AI Integrated Virtual Engineering
+                </p>
+                <p class="text-sm text-gray-400">
+                  Lovely Professional University, Punjab
+                </p>
+              </div>
+              <span
+                class="text-xs bg-emerald-900 text-emerald-300 px-3 py-1 rounded-full font-medium whitespace-nowrap"
+                >Feb 2025 – Jan 2026</span
+              >
+            </div>
+            <ul
+              class="list-disc list-inside text-gray-300 space-y-1 text-sm ml-2"
+            >
+              <li>
+                Founded WAIVE, a university venture integrating web development
+                and AI across 2 core domains.
+              </li>
+              <li>
+                Defined the organization's vision, technical roadmap, and
+                project objectives from inception through development.
+              </li>
+              <li>
+                Researched and evaluated 10+ modern web and AI technologies to
+                identify suitable implementation approaches.
+              </li>
+              <li>
+                Secured initial seed funding from LPU's incubation centre,
+                supporting AI research and operational costs.
+              </li>
+              <li>
+                Coordinated project activities and technical decision-making
+                across all development phases.
+              </li>
+            </ul>
           </div>
+
           <div
-            class="card text-center flex flex-col items-center p-6"
-            data-aos="zoom-in"
-            data-aos-duration="800"
-            data-aos-delay="1000"
+            class="timeline-item card"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            data-aos-delay="200"
           >
-            <i class="fa-solid fa-users text-5xl text-sky-400 mb-3"></i>
-            <p class="font-semibold text-lg">Teamwork</p>
+            <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+              <div>
+                <h3 class="text-xl font-bold text-white">
+                  Web Development Intern
+                </h3>
+                <p class="text-emerald-400 font-semibold">
+                  SkillCraft Technologies
+                </p>
+              </div>
+              <span
+                class="text-xs bg-emerald-900 text-emerald-300 px-3 py-1 rounded-full font-medium whitespace-nowrap"
+                >Sep 2025 – Oct 2025</span
+              >
+            </div>
+            <ul
+              class="list-disc list-inside text-gray-300 space-y-1 text-sm ml-2"
+            >
+              <li>
+                Developed web applications using HTML, CSS, and JavaScript with
+                responsive UIs across desktop and mobile.
+              </li>
+              <li>
+                Built and enhanced 5+ frontend components, improving usability
+                and consistency across multiple web pages.
+              </li>
+              <li>
+                Diagnosed and resolved 10+ frontend issues related to layout,
+                responsiveness, and browser compatibility.
+              </li>
+              <li>
+                Implemented accessibility best practices, improving user
+                experience across multiple screen sizes.
+              </li>
+              <li>
+                Optimized website assets and frontend code, contributing to
+                improved page performance and load efficiency.
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 4. Services (Web Development Focus) & Projects Showcase -->
+    <!-- 5. Projects Section (REPLACED) -->
+    <section id="projects" class="section-padding bg-secondary-color">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="section-title" data-aos="fade-up">
+          Featured <span>Projects</span>
+        </h2>
+
+        <div class="project-grid grid md:grid-cols-2 gap-8">
+          <!-- CampusEats -->
+          <div class="card p-6" data-aos="fade-up" data-aos-duration="1200">
+            <div class="flex items-center gap-3 mb-3">
+              <div
+                class="w-10 h-10 rounded-lg bg-emerald-900 flex items-center justify-center flex-shrink-0"
+              >
+                <i class="fa-solid fa-utensils text-emerald-400"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-white">CampusEats</h4>
+                <p class="text-xs text-gray-500">Jan 2026 – Present</p>
+              </div>
+            </div>
+            <p class="text-sm text-gray-400 mb-4">
+              Full-stack campus food delivery platform with 4 user roles —
+              students, vendors, delivery partners, and administrators —
+              featuring real-time order tracking and digital payments.
+            </p>
+            <ul
+              class="list-disc list-inside space-y-1 text-gray-300 text-sm ml-2 mb-4"
+            >
+              <li>
+                Secure role-based authentication for 4 distinct user types with
+                separate dashboards.
+              </li>
+              <li>
+                Real-time order sync between customers, vendors, and delivery
+                partners via Socket.IO.
+              </li>
+              <li>
+                Razorpay payment gateway with automated transaction
+                verification.
+              </li>
+              <li>Admin dashboard for order management and analytics.</li>
+            </ul>
+            <div class="mb-4">
+              <span class="tech-pill">React.js</span>
+              <span class="tech-pill">Node.js</span>
+              <span class="tech-pill">Express.js</span>
+              <span class="tech-pill">MongoDB</span>
+              <span class="tech-pill">Socket.IO</span>
+              <span class="tech-pill">Razorpay</span>
+            </div>
+            <a
+              href="https://campus-eats-drab.vercel.app/"
+              target="_blank"
+              class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-medium text-sm transition duration-300"
+            >
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live
+              Project
+            </a>
+          </div>
+
+          <!-- Sri Adithya Furniture -->
+          <div
+            class="card p-6"
+            data-aos="fade-up"
+            data-aos-duration="1200"
+            data-aos-delay="100"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div
+                class="w-10 h-10 rounded-lg bg-amber-900 flex items-center justify-center flex-shrink-0"
+              >
+                <i class="fa-solid fa-store text-amber-400"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-white">
+                  Sri Adithya Furniture
+                </h4>
+                <p class="text-xs text-gray-500">
+                  Real Client · Sep 2025 – Oct 2025
+                </p>
+              </div>
+            </div>
+            <p class="text-sm text-gray-400 mb-4">
+              Responsive business website built for a real furniture client,
+              live in production on a custom domain and supporting actual
+              business operations.
+            </p>
+            <ul
+              class="list-disc list-inside space-y-1 text-gray-300 text-sm ml-2 mb-4"
+            >
+              <li>
+                Showcases 20+ furniture products with a fully responsive layout.
+              </li>
+              <li>WhatsApp click-to-chat for one-click customer inquiries.</li>
+              <li>
+                ~80% reduction in page load time and 50%+ reduction in page size
+                via asset optimization.
+              </li>
+              <li>
+                Deployed on custom domain, accessible to 100% of online
+                visitors.
+              </li>
+            </ul>
+            <div class="mb-4">
+              <span class="tech-pill">HTML</span>
+              <span class="tech-pill">CSS</span>
+              <span class="tech-pill">JavaScript</span>
+              <span class="tech-pill">Performance Optimization</span>
+            </div>
+            <a
+              href="https://sriadithyafurniture.shop/"
+              target="_blank"
+              class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-medium text-sm transition duration-300"
+            >
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live
+              Project
+            </a>
+          </div>
+
+          <!-- ProcessOptima -->
+          <div
+            class="card p-6"
+            data-aos="fade-up"
+            data-aos-duration="1200"
+            data-aos-delay="200"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div
+                class="w-10 h-10 rounded-lg bg-blue-900 flex items-center justify-center flex-shrink-0"
+              >
+                <i class="fa-solid fa-chart-line text-blue-400"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-white">ProcessOptima</h4>
+                <p class="text-xs text-gray-500">Nov 2025 – Dec 2025</p>
+              </div>
+            </div>
+            <p class="text-sm text-gray-400 mb-4">
+              Real-time system process analyzer and monitoring dashboard with
+              sub-second refresh, tracking CPU, memory, and hundreds of
+              concurrent processes.
+            </p>
+            <ul
+              class="list-disc list-inside space-y-1 text-gray-300 text-sm ml-2 mb-4"
+            >
+              <li>
+                Tracks 3 core system metrics and 200+ active processes in
+                real-time.
+              </li>
+              <li>Visualizes 100+ system resource data points per minute.</li>
+              <li>Automated threshold alerts for proactive issue detection.</li>
+              <li>
+                One-click exportable JSON performance snapshots for diagnostics
+                and auditing.
+              </li>
+            </ul>
+            <div class="mb-4">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Real-time Monitoring</span>
+              <span class="tech-pill">System Analytics</span>
+            </div>
+            <a
+              href="https://github.com/ManiDeep1822"
+              target="_blank"
+              class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-medium text-sm transition duration-300"
+            >
+              <i class="fa-brands fa-github"></i> View Source Code
+            </a>
+          </div>
+
+          <!-- Personal Portfolio -->
+          <div
+            class="card p-6"
+            data-aos="fade-up"
+            data-aos-duration="1200"
+            data-aos-delay="300"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div
+                class="w-10 h-10 rounded-lg bg-purple-900 flex items-center justify-center flex-shrink-0"
+              >
+                <i class="fa-solid fa-globe text-purple-400"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-white">Personal Portfolio</h4>
+                <p class="text-xs text-gray-500">Oct 2024 – Nov 2024</p>
+              </div>
+            </div>
+            <p class="text-sm text-gray-400 mb-4">
+              Comprehensive developer portfolio showcasing projects, skills, and
+              experience. Fully responsive and performance-optimised for all
+              screen sizes.
+            </p>
+            <ul
+              class="list-disc list-inside space-y-1 text-gray-300 text-sm ml-2 mb-4"
+            >
+              <li>
+                Showcases 5+ projects with live links and technical breakdowns.
+              </li>
+              <li>Fully responsive across desktop, tablet, and mobile.</li>
+              <li>20% load time improvement through frontend optimisation.</li>
+              <li>Deployed on GitHub Pages with AOS scroll animations.</li>
+            </ul>
+            <div class="mb-4">
+              <span class="tech-pill">HTML</span>
+              <span class="tech-pill">CSS</span>
+              <span class="tech-pill">JavaScript</span>
+              <span class="tech-pill">GitHub Pages</span>
+            </div>
+            <a
+              href="https://manideep1822.github.io/Portfolio/"
+              target="_blank"
+              class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-medium text-sm transition duration-300"
+            >
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live
+              Project
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Services Section -->
     <section id="services" class="section-padding">
       <div class="max-w-6xl mx-auto">
         <h2 class="section-title" data-aos="fade-up">
-          My <span>Work & Services</span>
+          What I <span>Offer</span>
         </h2>
-
-        <!-- Service Cards -->
-        <div class="grid md:grid-cols-3 gap-8 mb-12">
+        <div class="grid md:grid-cols-3 gap-8">
           <div
             class="card text-center"
             data-aos="flip-up"
@@ -847,13 +1238,13 @@
             data-aos-delay="100"
           >
             <i
-              class="fa-solid fa-laptop-code text-5xl text-accent-color mb-4"
+              class="fa-solid fa-laptop-code text-5xl text-emerald-400 mb-4"
             ></i>
-            <h3 class="text-xl font-bold mb-3">Front-End Development</h3>
+            <h3 class="text-xl font-bold mb-3">Full-Stack Development</h3>
             <p class="text-gray-400 text-sm">
-              Crafting fast, responsive, and beautiful user interfaces using
-              <b>HTML5, CSS3, and JavaScript</b> for a seamless user experience
-              across all devices.
+              End-to-end web applications using the <b>MERN stack</b> — from
+              database design and REST APIs to responsive React frontends with
+              real-time capabilities.
             </p>
           </div>
 
@@ -864,13 +1255,13 @@
             data-aos-delay="200"
           >
             <i
-              class="fa-solid fa-layer-group text-5xl text-accent-color mb-4"
+              class="fa-solid fa-layer-group text-5xl text-emerald-400 mb-4"
             ></i>
-            <h3 class="text-xl font-bold mb-3">Back-End Programming</h3>
+            <h3 class="text-xl font-bold mb-3">API & Backend Engineering</h3>
             <p class="text-gray-400 text-sm">
-              Building core application logic and server-side components using
-              <b>Python</b> and foundational knowledge of the
-              <b>Django Framework</b>.
+              Scalable server-side systems with <b>Node.js and Express.js</b>,
+              secure authentication, role-based access control, and payment
+              gateway integrations.
             </p>
           </div>
 
@@ -881,165 +1272,47 @@
             data-aos-delay="300"
           >
             <i
-              class="fa-solid fa-mobile-screen-button text-5xl text-accent-color mb-4"
+              class="fa-solid fa-mobile-screen-button text-5xl text-emerald-400 mb-4"
             ></i>
-            <h3 class="text-xl font-bold mb-3">Responsive Design</h3>
+            <h3 class="text-xl font-bold mb-3">Responsive Web Design</h3>
             <p class="text-gray-400 text-sm">
-              Ensuring every project is accessible and looks flawless on any
-              screen size, from mobile phones to large desktops.
+              Pixel-perfect, accessible interfaces optimised for performance
+              across all screen sizes — with proven results like 80% load time
+              reduction on client projects.
             </p>
-          </div>
-        </div>
-
-        <h3
-          class="text-2xl font-bold text-center mb-6 text-emerald-300"
-          data-aos="fade-up"
-        >
-          Project Showcase
-        </h3>
-
-        <!-- Projects Grid (Allows for 3 projects per row on desktop) -->
-        <div class="project-grid grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- 1. Personal Portfolio Website (Existing Project) -->
-          <div class="card p-6" data-aos="fade-up" data-aos-duration="1200">
-            <h4 class="text-2xl font-bold mb-2 text-white">
-              Personal Portfolio Website
-            </h4>
-            <p class="text-sm text-gray-400 mb-4">
-              Technology: <b>HTML, CSS, JavaScript, Web Design</b> | Status:
-              Completed
-            </p>
-            <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
-              <li>
-                Developed a responsive online portfolio to showcase development
-                skills.
-              </li>
-              <li>
-                Achieved significant performance gains by
-                <b>optimizing website load time by 20%</b>.
-              </li>
-              <li>
-                Designed to adapt perfectly to all screen sizes for maximum
-                accessibility.
-              </li>
-            </ul>
-            <a
-              href="https://manideep1822.github.io/Portfolio/"
-              target="_blank"
-              class="mt-4 inline-block text-accent-color hover:underline font-medium transition duration-300"
-            >
-              View Live Project
-              <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
-            </a>
-          </div>
-
-          <!-- 2. UPDATED PROJECT: Simple To-Do List App (HTML/JS) -->
-          <div
-            class="card p-6"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-            data-aos-delay="200"
-          >
-            <h4 class="text-2xl font-bold mb-2 text-white">
-              Simple To-Do List App
-            </h4>
-            <p class="text-sm text-gray-400 mb-4">
-              Technology: <b>HTML, CSS, Vanilla JavaScript</b> | Status:
-              Completed
-            </p>
-            <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
-              <li>
-                Developed a classic task management application using pure
-                front-end technologies.
-              </li>
-              <li>
-                Demonstrates core JavaScript skills for
-                <b>DOM manipulation</b> and event handling.
-              </li>
-              <li>
-                Allows users to add, delete, and mark tasks as complete,
-                showcasing interactive UI logic.
-              </li>
-            </ul>
-            <a
-              href="https://github.com/ManiDeep1822"
-              target="_blank"
-              class="mt-4 inline-block text-accent-color hover:underline font-medium transition duration-300"
-            >
-              View Source Code <i class="fa-brands fa-github ml-1"></i>
-            </a>
-          </div>
-
-          <!-- 3. UPDATED PROJECT: Tic Tac Toe Game (HTML/JS) -->
-          <div
-            class="card p-6"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-            data-aos-delay="400"
-          >
-            <h4 class="text-2xl font-bold mb-2 text-white">Tic Tac Toe Game</h4>
-            <p class="text-sm text-gray-400 mb-4">
-              Technology: <b>HTML, CSS, Vanilla JavaScript</b> | Status:
-              Completed
-            </p>
-            <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
-              <li>
-                Created the classic Tic-Tac-Toe game, runnable entirely in the
-                browser.
-              </li>
-              <li>
-                Focuses on implementing <b>game logic</b>, state management, and
-                victory condition checking.
-              </li>
-              <li>
-                Features a clean, responsive grid layout, demonstrating CSS
-                layout skills.
-              </li>
-            </ul>
-            <a
-              href="https://github.com/ManiDeep1822"
-              target="_blank"
-              class="mt-4 inline-block text-accent-color hover:underline font-medium transition duration-300"
-            >
-              View Source Code <i class="fa-brands fa-github ml-1"></i>
-            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5. Contact Section -->
+    <!-- 7. Contact Section -->
     <section id="contact" class="section-padding bg-secondary-color">
       <div class="max-w-xl mx-auto text-center">
         <h2 class="section-title" data-aos="fade-up">
           Get in <span>Touch</span>
         </h2>
         <p class="text-gray-400 mb-10" data-aos="fade-up" data-aos-delay="200">
-          Whether you have a job offer, a project idea, or just want to connect,
-          my inbox is always open. Let's build something impactful together!
+          Whether you have an internship offer, a project idea, or just want to
+          connect — my inbox is always open.
         </p>
-
-        <!-- Contact Details Grid (Enhanced) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
           <div
             class="card p-4 flex items-center justify-center space-x-3"
             data-aos="fade-right"
             data-aos-delay="300"
           >
-            <i class="fa-solid fa-envelope text-xl text-accent-color"></i>
-            <p class="text-lg">indlachinnu123@gmail.com</p>
+            <i class="fa-solid fa-envelope text-xl text-emerald-400"></i>
+            <p class="text-sm">indlachinnu123@gmail.com</p>
           </div>
           <div
             class="card p-4 flex items-center justify-center space-x-3"
             data-aos="fade-left"
             data-aos-delay="400"
           >
-            <i class="fa-solid fa-phone text-xl text-accent-color"></i>
-            <p class="text-lg">+91 76618 22103</p>
+            <i class="fa-solid fa-phone text-xl text-emerald-400"></i>
+            <p class="text-sm">+91 76618 22103</p>
           </div>
         </div>
-
-        <!-- Contact Form (New) -->
         <form
           id="contact-form"
           class="space-y-6 p-6 card"
@@ -1071,43 +1344,35 @@
             <button type="submit">Send Message</button>
           </div>
         </form>
-
-        <!-- Confirmation Message -->
         <div
           id="confirmation-message"
           class="confirmation-message hidden"
           data-aos="fade-up"
           data-aos-delay="700"
         >
-          Thank you! Your message is ready to send. Opening your email client...
+          Thank you! A new tab is opening now to compose the email in Gmail.
         </div>
       </div>
     </section>
 
-    <!-- Load AOS and Typed.js libraries -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.js"
-      xintegrity="sha512-+2pW8xXU/rNr7VS+H62aqapfRpqFwnSQh9ap6THjsm41AxgA0MhFRtfrABS+Lx2KHJn82UOrnBKhjZOXpom2LQ=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
 
     <script>
-      // Initialize AOS (Animate On Scroll)
-      AOS.init({
-        once: true, // Animation only runs once
-        duration: 1200, // Duration of animation
-      });
+      AOS.init({ once: true, duration: 1200 });
 
-      // Typed.js for the dynamic text effect
       document.addEventListener("DOMContentLoaded", function () {
         var typed = new Typed(".typewriter-text", {
           strings: [
-            "Web Developer",
-            "CSE Student",
+            "Software Engineer",
+            "Full-Stack Developer",
+            "MERN Stack Developer",
+            "AI Explorer",
             "Problem Solver",
-            "Quick Learner",
           ],
           typeSpeed: 70,
           backSpeed: 50,
@@ -1116,81 +1381,67 @@
           cursorChar: "|",
         });
 
-        // Smooth scrolling for all internal links
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
           anchor.addEventListener("click", function (e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute("href")).scrollIntoView({
-              behavior: "smooth",
-            });
+            document
+              .querySelector(this.getAttribute("href"))
+              .scrollIntoView({ behavior: "smooth" });
           });
         });
 
-        // Contact Form Submission Handler
         const contactForm = document.getElementById("contact-form");
         if (contactForm) {
           contactForm.addEventListener("submit", function (e) {
             e.preventDefault();
-
             const name = document.getElementById("form-name").value.trim();
             const email = document.getElementById("form-email").value.trim();
             const message = document
               .getElementById("form-message")
               .value.trim();
             const confirmation = document.getElementById(
-              "confirmation-message"
+              "confirmation-message",
             );
 
-            // Simple validation
             if (!name || !email || !message) {
               confirmation.textContent =
                 "Please fill in all fields before sending.";
               confirmation.classList.remove("hidden");
-              confirmation.style.backgroundColor = "#991b1b"; // Red for error
+              confirmation.style.backgroundColor = "#991b1b";
               return;
             }
 
-            // Using Gmail Compose URL to ensure it opens in a web browser tab,
-            // pre-filling the details for the user.
             const recipient = "indlachinnu123@gmail.com";
             const subject = encodeURIComponent(
-              `Inquiry from ${name} via Portfolio`
+              `Inquiry from ${name} via Portfolio`,
             );
             const bodyText = encodeURIComponent(
-              `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+              `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
             );
-
-            // Gmail Compose URL format: https://mail.google.com/mail/?view=cm&fs=1&to={email}&su={subject}&body={body}
             const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${bodyText}`;
 
-            // Display confirmation and instruct user about new tab
             confirmation.textContent =
-              "Thank you for reaching out! A new tab is opening now to compose the email in Gmail.";
+              "Thank you for reaching out! A new tab is opening to compose the email in Gmail.";
             confirmation.classList.remove("hidden");
-            confirmation.style.backgroundColor = "#065f46"; // Green for success
-
-            // Reset form fields after successful capture
+            confirmation.style.backgroundColor = "#065f46";
             contactForm.reset();
-
-            // Open Gmail in a new window/tab after a slight delay
             setTimeout(() => {
-              window.open(gmailLink, "_blank"); // Opens in a new tab
+              window.open(gmailLink, "_blank");
             }, 500);
           });
         }
       });
 
-      // Mobile Menu Functions (hamburg/cancel)
       function hamburg() {
         const mobileMenu = document.getElementById("mobile-menu");
         mobileMenu.classList.add("active");
-        document.body.style.overflow = "hidden"; // Prevent scrolling when menu is open
+        document.body.style.overflow = "hidden";
       }
 
       function cancel() {
         const mobileMenu = document.getElementById("mobile-menu");
         mobileMenu.classList.remove("active");
-        document.body.style.overflow = "auto"; // Re-enable scrolling
+        document.body.style.overflow = "auto";
       }
     </script>
   </body>

@@ -32,7 +32,7 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, [currentText, isDeleting, currentRoleIndex]);
 
-  const handleDownloadCv = () => {
+  const handleDownloadResume = () => {
     confetti({
       particleCount: 100,
       spread: 80,
@@ -110,10 +110,10 @@ export default function Hero() {
 
               <a
                 href={personalInfo.resumePath}
-                download="ManiDeep_Resume.pdf"
-                onClick={handleDownloadCv}
+                download="Indla_Mohana_Venkata_Mani_Deep_Resume.pdf"
+                onClick={handleDownloadResume}
                 className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-slate-300 hover:text-emerald-400 hover:bg-white/5 border border-white/10 text-sm font-medium transition-all whitespace-nowrap flex-shrink-0"
-                title="Download CV (PDF)"
+                title="Download Resume (PDF)"
               >
                 <Download className="w-4 h-4 flex-shrink-0" />
                 <span className="whitespace-nowrap">Resume PDF</span>

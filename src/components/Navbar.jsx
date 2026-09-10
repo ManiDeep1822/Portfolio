@@ -51,7 +51,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleCvDownload = () => {
+  const handleResumeDownload = () => {
     confetti({
       particleCount: 80,
       spread: 70,
@@ -142,8 +142,8 @@ export default function Navbar() {
 
             <a
               href={personalInfo.resumePath}
-              download="ManiDeep_Resume.pdf"
-              onClick={handleCvDownload}
+              download="Indla_Mohana_Venkata_Mani_Deep_Resume.pdf"
+              onClick={handleResumeDownload}
               className="btn-cyber-primary flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-wider font-bold"
             >
               <FileDown className="w-4 h-4" />
@@ -155,10 +155,10 @@ export default function Navbar() {
           <div className="flex items-center gap-2 md:hidden">
             <a
               href={personalInfo.resumePath}
-              download="ManiDeep_Resume.pdf"
-              onClick={handleCvDownload}
+              download="Indla_Mohana_Venkata_Mani_Deep_Resume.pdf"
+              onClick={handleResumeDownload}
               className="p-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400"
-              title="Download CV"
+              title="Download Resume"
             >
               <FileDown className="w-5 h-5" />
             </a>
@@ -230,15 +230,15 @@ export default function Navbar() {
 
               <a
                 href={personalInfo.resumePath}
-                download="ManiDeep_Resume.pdf"
+                download="Indla_Mohana_Venkata_Mani_Deep_Resume.pdf"
                 onClick={() => {
-                  handleCvDownload();
+                  handleResumeDownload();
                   setMobileMenuOpen(false);
                 }}
                 className="btn-cyber-primary flex items-center gap-2 px-5 py-2.5 text-xs uppercase tracking-wider font-bold"
               >
                 <FileDown className="w-4 h-4" />
-                <span>Download CV</span>
+                <span>Download Resume</span>
               </a>
             </div>
           </div>

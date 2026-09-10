@@ -9,7 +9,7 @@ export const personalInfo = {
   location: "Jalandhar, Punjab, India",
   linkedin: "https://linkedin.com/in/manideep-developer",
   github: "https://github.com/ManiDeep1822",
-  resumePath: "/Indla_Mani_Deep_Resume.pdf",
+  resumePath: "/ManiDeep_Resume.pdf",
   photoPath: "/Photo.jpg",
   avatarFallback: "MD",
   availability: "Open to High-Impact Roles & Internships",

@@ -7,45 +7,45 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#080c14",
+        background: "#09090b",
         surface: {
-          DEFAULT: "#0f1624",
-          subtle: "#131b2d",
-          card: "#162035",
-          border: "rgba(255, 255, 255, 0.08)",
-          hover: "rgba(255, 255, 255, 0.04)"
+          50: "#18181b",
+          100: "#141417",
+          200: "#101012",
+          DEFAULT: "#121215",
+          elevated: "#1a1a1f",
+          border: "#27272a",
+          muted: "#3f3f46"
         },
-        primary: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981', // emerald
-          600: '#059669',
-          700: '#047857',
-        },
-        accent: {
+        brand: {
+          emerald: "#10b981",
           cyan: "#06b6d4",
-          teal: "#14b8a6",
-          purple: "#a855f7",
-          amber: "#f59e0b"
+          violet: "#8b5cf6",
+          blue: "#3b82f6"
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+        mono: ['JetBrains Mono', 'Fira Code', 'Menlo', 'monospace']
+      },
+      boxShadow: {
+        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06)',
+        'elevated': '0 10px 30px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+        'spotlight': '0 0 80px -20px rgba(255, 255, 255, 0.08)',
       },
       animation: {
-        'spin-slow': 'spin 20s linear infinite',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'float': 'float 6s ease-in-out infinite',
+        'fade-in': 'fadeIn 0.5s ease-out forwards',
+        'pulse-subtle': 'pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-12px)' },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' }
+        },
+        pulseSubtle: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.4' }
         }
       }
     },

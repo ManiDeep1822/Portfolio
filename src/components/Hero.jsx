@@ -1,170 +1,297 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Download, Sparkles, Terminal, ShieldCheck, Mail, Phone, ExternalLink } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import Hero3DCanvas from './Hero3DCanvas';
 import { personalInfo, stats } from '../data/portfolioData';
+import { 
+  FileDown, 
+  ArrowUpRight, 
+  TerminalIcon, 
+  ActivityIcon, 
+  LayersIcon, 
+  CheckIcon, 
+  CopyIcon,
+  GithubIcon,
+  LinkedinIcon,
+  WhatsAppIcon
+} from './Icons';
 
 export default function Hero() {
-  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [activeTab, setActiveTab] = useState('events');
+  const [isSimulating, setIsSimulating] = useState(true);
+  const [copied, setCopied] = useState(false);
+  const [eventLogs, setEventLogs] = useState([
+    { id: 1, time: '14:24:01', source: 'CampusEats.Gateway', type: 'AUTH', text: 'Google OAuth session validated [Role: Student]', status: '200 OK' },
+    { id: 2, time: '14:24:03', source: 'Razorpay.Webhook', type: 'PAYMENT', text: 'Captured order payment payload [TXN_98412]', status: 'VERIFIED' },
+    { id: 3, time: '14:24:04', source: 'Socket.IO:443', type: 'DISPATCH', text: 'Emitted order:incoming to Vendor [Tiffin Hub]', status: '< 85ms' },
+    { id: 4, time: '14:24:06', source: 'ProcessOptima.Engine', type: 'METRIC', text: 'Heuristic anomaly scan clear (214 PID nodes)', status: 'HEALTHY' },
+  ]);
 
-  // Typewriter effect for roles
+  // Live simulation ticker for realism
   useEffect(() => {
-    const roles = personalInfo.roles;
-    const fullText = roles[currentRoleIndex];
-    const typingSpeed = isDeleting ? 40 : 80;
+    if (!isSimulating) return;
 
-    const timer = setTimeout(() => {
-      if (!isDeleting && currentText === fullText) {
-        // Pause at end of word
-        setTimeout(() => setIsDeleting(true), 1500);
-      } else if (isDeleting && currentText === '') {
-        setIsDeleting(false);
-        setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
-      } else {
-        setCurrentText(
-          fullText.substring(0, currentText.length + (isDeleting ? -1 : 1))
-        );
-      }
-    }, typingSpeed);
+    const streamSources = [
+      { source: 'Socket.IO:443', type: 'DISPATCH', text: 'Delivery partner assigned [GPS Broadcast]', status: '< 72ms' },
+      { source: 'MongoReplica', type: 'DB_SYNC', text: 'Order indexed in activeOrders collection', status: 'COMMITTED' },
+      { source: 'CampusEats.API', type: 'CACHE', text: 'Menu cache hit for vendor catalog', status: '304 NOT_MOD' },
+      { source: 'ProcessOptima.Worker', type: 'TELEMETRY', text: 'CPU load 18.4% | RAM allocation 4.1GB', status: 'NOMINAL' },
+      { source: 'Razorpay.Security', type: 'SIGNATURE', text: 'HMAC-SHA256 signature verified', status: 'SECURED' }
+    ];
 
-    return () => clearTimeout(timer);
-  }, [currentText, isDeleting, currentRoleIndex]);
+    let counter = 5;
+    const interval = setInterval(() => {
+      const now = new Date();
+      const timeStr = now.toTimeString().split(' ')[0];
+      const randomEvent = streamSources[Math.floor(Math.random() * streamSources.length)];
 
-  const handleDownloadResume = () => {
+      setEventLogs(prev => [
+        { id: counter++, time: timeStr, ...randomEvent },
+        ...prev.slice(0, 5)
+      ]);
+    }, 3200);
+
+    return () => clearInterval(interval);
+  }, [isSimulating]);
+
+  const handleResumeDownload = () => {
     confetti({
-      particleCount: 100,
-      spread: 80,
+      particleCount: 60,
+      spread: 70,
       origin: { y: 0.6 },
-      colors: ['#10b981', '#06b6d4', '#34d399', '#38bdf8']
+      colors: ['#ffffff', '#a1a1aa', '#10b981', '#3b82f6']
     });
   };
 
-  return (
-    <section id="home" className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
-      {/* Ambient background glow orbs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/3 right-10 w-[450px] h-[450px] bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none" />
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(personalInfo.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
+  return (
+    <section id="home" className="pt-28 pb-20 lg:pt-36 lg:pb-28 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Hero Narrative & Controls */}
-          <div className="lg:col-span-6 flex flex-col items-start text-left">
-            {/* Availability Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs sm:text-sm font-medium backdrop-blur-md mb-6 shadow-sm shadow-emerald-950">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-              </span>
-              <span>{personalInfo.availability}</span>
-            </div>
-
-            {/* Identity Kicker */}
-            <div className="flex items-center gap-2.5 mb-3">
-              <span className="w-6 h-[2px] bg-gradient-to-r from-emerald-400 to-cyan-400" />
-              <h2 className="text-xs sm:text-sm font-mono font-semibold tracking-widest text-emerald-400 uppercase">
-                Indla Mohana Venkata Mani Deep
-              </h2>
+          
+          {/* Left Column: Personal Brand & Value Proposition */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left">
+            
+            {/* Status Pill */}
+            <div className="badge-subtle mb-6">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse-subtle" />
+              <span>Available for Software Engineering Roles & Internships</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-display tracking-tight text-white leading-[1.15] mb-4">
-              Designing Real-Time Web Experiences with{' '}
-              <span className="text-gradient">Precision & Scale.</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1] mb-6">
+              Engineering <span className="text-heading">real-time systems</span> with speed, scale & precision.
             </h1>
 
-            {/* Dynamic Typewriter Title */}
-            <div className="flex items-center gap-2 text-lg sm:text-2xl font-mono text-slate-300 mb-6 h-9">
-              <span className="text-emerald-400 font-bold">&gt;</span>
-              <span>I am a</span>
-              <span className="text-cyan-300 font-semibold border-b-2 border-emerald-400 pb-0.5">
-                {currentText}
-              </span>
-              <span className="animate-pulse text-emerald-400">|</span>
-            </div>
-
-            {/* Narrative Bio */}
-            <p className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-xl mb-8">
-              Hello! I'm <strong className="text-white font-semibold">Indla Mohana Venkata Mani Deep</strong>, a Computer Science & Engineering student at{' '}
-              <span className="text-emerald-300">Lovely Professional University</span>. I specialize in architecting full-stack 
-              MERN solutions, event-driven Socket.IO systems, and responsive modern web applications.
+            {/* Sub-narrative */}
+            <p className="text-base sm:text-lg text-zinc-400 font-normal leading-relaxed max-w-2xl mb-8">
+              I'm <span className="text-zinc-100 font-medium">{personalInfo.name}</span>, a Computer Science student at <span className="text-zinc-200">Lovely Professional University</span>. I build high-concurrency MERN platforms, event-driven Socket.IO architectures, and high-performance web products with clean systems design.
             </p>
 
-            {/* CTA Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3.5 w-full sm:w-auto mb-10">
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-3.5 mb-10 w-full sm:w-auto">
               <a
                 href="#projects"
-                className="btn-cyber-primary flex items-center justify-center gap-2.5 px-7 py-3.5 text-sm sm:text-base font-bold shadow-lg shadow-emerald-500/25 group whitespace-nowrap flex-shrink-0"
+                className="btn-primary"
               >
-                <span className="whitespace-nowrap">Explore Projects</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 flex-shrink-0" />
-              </a>
-
-              <a
-                href="#contact"
-                className="btn-cyber-secondary flex items-center justify-center gap-2.5 px-6 py-3.5 text-sm sm:text-base font-semibold whitespace-nowrap flex-shrink-0"
-              >
-                <span className="whitespace-nowrap">Get In Touch</span>
+                <span>View Case Studies</span>
+                <ArrowUpRight className="w-4 h-4" />
               </a>
 
               <a
                 href={personalInfo.resumePath}
                 download="Indla_Mohana_Venkata_Mani_Deep_Resume.pdf"
-                onClick={handleDownloadResume}
-                className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-slate-300 hover:text-emerald-400 hover:bg-white/5 border border-white/10 text-sm font-medium transition-all whitespace-nowrap flex-shrink-0"
-                title="Download Resume (PDF)"
+                onClick={handleResumeDownload}
+                className="btn-secondary"
+                title="Download Official Resume"
               >
-                <Download className="w-4 h-4 flex-shrink-0" />
-                <span className="whitespace-nowrap">Resume PDF</span>
+                <FileDown className="w-4 h-4" />
+                <span>Download Resume</span>
+              </a>
+
+              <a
+                href="#contact"
+                className="px-4 py-2.5 text-xs sm:text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+              >
+                Get In Touch →
               </a>
             </div>
 
             {/* Quick Contact & Verified Identity Strip */}
-            <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/10 text-xs sm:text-sm text-slate-400 font-mono">
-              <a
-                href={`mailto:${personalInfo.email}`}
-                className="flex items-center gap-1.5 hover:text-emerald-400 transition-colors whitespace-nowrap"
+            <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-zinc-800/80 w-full text-xs font-mono text-zinc-400">
+              <button
+                onClick={handleCopyEmail}
+                className="flex items-center gap-2 hover:text-zinc-200 transition-colors focus:outline-none"
+                title="Click to copy email"
               >
-                <Mail className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span className="whitespace-nowrap">{personalInfo.email}</span>
-              </a>
-              <span className="text-slate-600 hidden sm:inline">•</span>
+                {copied ? <CheckIcon className="w-3.5 h-3.5 text-emerald-400" /> : <CopyIcon className="w-3.5 h-3.5 text-zinc-500" />}
+                <span>{copied ? 'Copied to Clipboard!' : personalInfo.email}</span>
+              </button>
+
+              <span className="text-zinc-700 hidden sm:inline">|</span>
+
               <a
-                href={`tel:${personalInfo.phone}`}
-                className="flex items-center gap-1.5 hover:text-cyan-400 transition-colors whitespace-nowrap"
+                href={personalInfo.github}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5 hover:text-zinc-200 transition-colors"
               >
-                <Phone className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                <span className="whitespace-nowrap">{personalInfo.phone}</span>
+                <GithubIcon className="w-3.5 h-3.5" />
+                <span>github.com/ManiDeep1822</span>
               </a>
+
+              <span className="text-zinc-700 hidden sm:inline">|</span>
+
+              <span className="text-zinc-500">Jalandhar, Punjab, IN</span>
+            </div>
+
+          </div>
+
+          {/* Right Column: Live Engineering Telemetry Terminal */}
+          <div className="lg:col-span-5 w-full">
+            <div className="terminal-window overflow-hidden">
+              
+              {/* Terminal Window Header */}
+              <div className="flex items-center justify-between px-4 py-3 bg-zinc-900/90 border-b border-zinc-800/80">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-rose-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                  <span className="text-xs text-zinc-400 ml-2 font-mono">systems_monitor.sh</span>
+                </div>
+
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setIsSimulating(!isSimulating)}
+                    className="text-[11px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700 transition-colors"
+                  >
+                    {isSimulating ? 'PAUSE' : 'LIVE'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Terminal Tabs */}
+              <div className="flex items-center border-b border-zinc-800/80 bg-zinc-950/60 px-3 pt-2 text-xs font-mono">
+                <button
+                  onClick={() => setActiveTab('events')}
+                  className={`flex items-center gap-2 px-3 py-1.5 border-b-2 transition-all ${
+                    activeTab === 'events'
+                      ? 'border-emerald-500 text-emerald-400 bg-zinc-900/50'
+                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
+                  }`}
+                >
+                  <TerminalIcon className="w-3.5 h-3.5" />
+                  <span>Real-Time Stream</span>
+                </button>
+                
+                <button
+                  onClick={() => setActiveTab('architecture')}
+                  className={`flex items-center gap-2 px-3 py-1.5 border-b-2 transition-all ${
+                    activeTab === 'architecture'
+                      ? 'border-emerald-500 text-emerald-400 bg-zinc-900/50'
+                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
+                  }`}
+                >
+                  <LayersIcon className="w-3.5 h-3.5" />
+                  <span>Topology</span>
+                </button>
+              </div>
+
+              {/* Terminal Content Body */}
+              <div className="p-4 min-h-[300px] flex flex-col justify-between text-xs font-mono">
+                {activeTab === 'events' ? (
+                  <div className="space-y-2.5">
+                    {eventLogs.map((log) => (
+                      <div key={log.id} className="flex items-start justify-between gap-2 border-b border-zinc-900/80 pb-2">
+                        <div className="flex flex-col gap-0.5">
+                          <div className="flex items-center gap-2">
+                            <span className="text-zinc-500 text-[10px]">{log.time}</span>
+                            <span className="text-zinc-300 font-semibold">{log.source}</span>
+                            <span className="px-1.5 py-0.2 rounded text-[10px] bg-zinc-800 text-zinc-400">
+                              {log.type}
+                            </span>
+                          </div>
+                          <span className="text-zinc-400 text-[11px] leading-tight mt-0.5">{log.text}</span>
+                        </div>
+                        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded whitespace-nowrap ${
+                          log.status.includes('OK') || log.status.includes('VERIFIED') || log.status.includes('HEALTHY') || log.status.includes('ms')
+                            ? 'text-emerald-400 bg-emerald-500/10'
+                            : 'text-zinc-400 bg-zinc-800'
+                        }`}>
+                          {log.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-4 py-2">
+                    <div className="text-[11px] text-zinc-400">
+                      // CampusEats Distributed Stack Topology
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[11px]">
+                      <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
+                        <div className="text-zinc-400 font-semibold mb-1">Client Interface</div>
+                        <div className="text-zinc-500">React 19 + Vite SPA</div>
+                        <div className="text-emerald-400 text-[10px] mt-1">● Redux Toolkit State</div>
+                      </div>
+                      <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
+                        <div className="text-zinc-400 font-semibold mb-1">WebSocket Gateway</div>
+                        <div className="text-zinc-500">Socket.IO Sub-100ms</div>
+                        <div className="text-emerald-400 text-[10px] mt-1">● Bi-directional Sync</div>
+                      </div>
+                      <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
+                        <div className="text-zinc-400 font-semibold mb-1">API Backend</div>
+                        <div className="text-zinc-500">Node.js + Express</div>
+                        <div className="text-emerald-400 text-[10px] mt-1">● 4 Role Authorization</div>
+                      </div>
+                      <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
+                        <div className="text-zinc-400 font-semibold mb-1">Persistence</div>
+                        <div className="text-zinc-500">MongoDB Atlas</div>
+                        <div className="text-emerald-400 text-[10px] mt-1">● Sharded Collections</div>
+                      </div>
+                    </div>
+                    <div className="p-2.5 rounded bg-zinc-900/50 border border-zinc-800/80 text-[11px] text-zinc-400 flex items-center justify-between">
+                      <span>Live Health Status:</span>
+                      <span className="text-emerald-400 font-semibold">99.9% Uptime across nodes</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Terminal Footer status line */}
+                <div className="pt-3 mt-3 border-t border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-500">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    Listening on port 443 (TLS v1.3)
+                  </span>
+                  <span>4 active channels</span>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          {/* Right Column: 360° Interactive 3D Visual Presentation */}
-          <div className="lg:col-span-6 relative">
-            <Hero3DCanvas />
-          </div>
         </div>
 
-        {/* Bottom Metrics Ribbon */}
-        <div className="mt-16 lg:mt-24 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          {stats.map((stat, i) => (
-            <div
-              key={i}
-              className="glass-card p-5 sm:p-6 rounded-2xl border border-white/10 hover:border-emerald-500/30 transition-all group"
-            >
-              <div className="text-2xl sm:text-3xl font-extrabold font-display text-white group-hover:text-emerald-300 transition-colors mb-1">
+        {/* Core Metrics Banner */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 pt-10 border-t border-zinc-800/80">
+          {stats.map((stat, idx) => (
+            <div key={idx} className="flex flex-col">
+              <span className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-1">
                 {stat.value}
-              </div>
-              <div className="text-sm font-semibold text-slate-300 mb-1">
+              </span>
+              <span className="text-xs sm:text-sm font-medium text-zinc-300">
                 {stat.label}
-              </div>
-              <div className="text-xs text-slate-400 font-mono leading-tight">
+              </span>
+              <span className="text-[11px] text-zinc-500 mt-0.5">
                 {stat.sub}
-              </div>
+              </span>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );

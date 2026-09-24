@@ -1,38 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileDown, Sparkles, Mail } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './Icons';
 import confetti from 'canvas-confetti';
 import { personalInfo } from '../data/portfolioData';
+import { 
+  GithubIcon, 
+  LinkedinIcon, 
+  FileDown, 
+  MenuIcon, 
+  XIcon, 
+  ArrowUpRight 
+} from './Icons';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Overview', href: '#home', id: 'home' },
+    { label: 'Projects', href: '#projects', id: 'projects' },
+    { label: 'Skills', href: '#skills', id: 'skills' },
+    { label: 'Experience', href: '#experience', id: 'experience' },
+    { label: 'Contact', href: '#contact', id: 'contact' },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      // Scrolled styling
-      setIsScrolled(window.scrollY > 30);
+      setIsScrolled(window.scrollY > 20);
 
-      // Scroll progress
-      const winScroll = document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-      setScrollProgress(scrolled);
-
-      // Active section spy
-      const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
-      const scrollPos = window.scrollY + 200;
+      const sections = ['home', 'projects', 'skills', 'experience', 'contact'];
+      const scrollPos = window.scrollY + 180;
 
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -53,64 +49,54 @@ export default function Navbar() {
 
   const handleResumeDownload = () => {
     confetti({
-      particleCount: 80,
-      spread: 70,
+      particleCount: 50,
+      spread: 60,
       origin: { y: 0.15 },
-      colors: ['#10b981', '#06b6d4', '#34d399', '#ffffff']
+      colors: ['#ffffff', '#a1a1aa', '#10b981', '#646cff']
     });
   };
 
   return (
     <>
-      {/* Scroll Progress Bar at the absolute top */}
-      <div className="fixed top-0 left-0 w-full h-[2.5px] z-50 bg-transparent pointer-events-none">
-        <div
-          className="h-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-300 transition-all duration-75 ease-out shadow-[0_0_10px_#10b981]"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
-
-      {/* Main Navbar */}
       <header
-        className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
           isScrolled
-            ? 'py-3.5 bg-[#080c14]/85 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/40'
-            : 'py-5 bg-transparent'
+            ? 'bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/80 py-3 shadow-sm'
+            : 'bg-transparent py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Logo / Monogram */}
+          {/* Brand & Identity */}
           <a
             href="#home"
-            className="group flex items-center gap-3 text-white font-display text-lg sm:text-xl font-bold tracking-tight"
+            className="flex items-center gap-3 group focus:outline-none"
+            aria-label="Back to top"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-cyan-500 p-[1.5px] transition-transform duration-300 group-hover:scale-105 shadow-md shadow-emerald-500/20">
-              <div className="w-full h-full bg-[#0b0f19] rounded-[10px] flex items-center justify-center">
-                <span className="text-emerald-400 font-mono font-bold text-sm">MD</span>
-              </div>
+            <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center font-mono text-xs font-semibold text-zinc-200 group-hover:border-zinc-700 transition-colors">
+              MD
             </div>
-            <div>
-              <span className="text-white group-hover:text-emerald-400 transition-colors font-bold block text-sm sm:text-base leading-tight">
-              <span className="text-emerald-400">Mani Deep</span>
+            <div className="flex flex-col">
+              <span className="font-semibold text-sm tracking-tight text-zinc-100 group-hover:text-white transition-colors">
+                Mani Deep
               </span>
-              <span className="hidden sm:block text-[10px] font-mono text-slate-400 font-normal tracking-wide">
-                Indla Mohana Venkata Mani Deep
+              <span className="text-[11px] font-mono text-zinc-500 hidden sm:inline">
+                Full-Stack Systems
               </span>
             </div>
           </a>
 
-          {/* Desktop Links */}
-          <nav className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/60 border border-white/10 backdrop-blur-md">
+          {/* Desktop Nav Links */}
+          <nav className="hidden md:flex items-center gap-1 bg-zinc-900/60 border border-zinc-800/80 px-2 py-1 rounded-full backdrop-blur-md">
             {navLinks.map((link) => {
-              const isActive = activeSection === link.href.replace('#', '');
+              const isActive = activeSection === link.id;
               return (
                 <a
-                  key={link.href}
+                  key={link.id}
                   href={link.href}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
                     isActive
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-sm shadow-emerald-500/20'
-                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                      ? 'bg-zinc-800 text-white shadow-sm'
+                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
                   }`}
                 >
                   {link.label}
@@ -119,131 +105,113 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* CTA & Socials */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Actions & Social Links */}
+          <div className="hidden md:flex items-center gap-2">
             <a
               href={personalInfo.github}
               target="_blank"
               rel="noreferrer"
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+              className="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
               aria-label="GitHub Profile"
             >
-              <GithubIcon className="w-5 h-5" />
+              <GithubIcon className="w-4 h-4" />
             </a>
             <a
               href={personalInfo.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+              className="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
               aria-label="LinkedIn Profile"
             >
-              <LinkedinIcon className="w-5 h-5" />
+              <LinkedinIcon className="w-4 h-4" />
             </a>
+
+            <div className="h-4 w-px bg-zinc-800 mx-1" />
 
             <a
               href={personalInfo.resumePath}
               download="Indla_Mohana_Venkata_Mani_Deep_Resume.pdf"
               onClick={handleResumeDownload}
-              className="btn-cyber-primary flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-wider font-bold"
+              className="btn-primary text-xs py-1.5 px-3.5"
             >
-              <FileDown className="w-4 h-4" />
+              <FileDown className="w-3.5 h-3.5" />
               <span>Resume</span>
             </a>
           </div>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Controls */}
           <div className="flex items-center gap-2 md:hidden">
             <a
               href={personalInfo.resumePath}
               download="Indla_Mohana_Venkata_Mani_Deep_Resume.pdf"
               onClick={handleResumeDownload}
-              className="p-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400"
+              className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300"
               title="Download Resume"
             >
-              <FileDown className="w-5 h-5" />
+              <FileDown className="w-4 h-4" />
             </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-slate-900 border border-white/10 text-slate-300 hover:text-white"
-              aria-label="Toggle Navigation Menu"
+              className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white"
+              aria-label="Toggle Navigation"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <XIcon className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Drawer Menu */}
-      <div
-        className={`fixed inset-0 z-30 md:hidden bg-black/80 backdrop-blur-xl transition-all duration-300 ${
-          mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={() => setMobileMenuOpen(false)}
-      >
-        <div
-          className={`absolute top-20 right-4 left-4 p-6 rounded-3xl bg-[#0f1624] border border-white/15 shadow-2xl transition-transform duration-300 ${
-            mobileMenuOpen ? 'translate-y-0 scale-100' : '-translate-y-8 scale-95'
-          }`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex flex-col gap-3">
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden bg-zinc-950/95 backdrop-blur-xl pt-24 px-6 flex flex-col justify-between pb-10 animate-fade-in">
+          <nav className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
-                key={link.href}
+                key={link.id}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-2xl text-base font-semibold transition-all ${
-                  activeSection === link.href.replace('#', '')
-                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
-                }`}
+                className="text-lg font-medium text-zinc-300 hover:text-white py-2 border-b border-zinc-900"
               >
                 {link.label}
               </a>
             ))}
+          </nav>
 
-            <div className="pt-4 mt-2 border-t border-white/10 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <a
-                  href={personalInfo.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white"
-                >
-                  <GithubIcon className="w-5 h-5" />
-                </a>
-                <a
-                  href={personalInfo.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white"
-                >
-                  <LinkedinIcon className="w-5 h-5" />
-                </a>
-                <a
-                  href={`mailto:${personalInfo.email}`}
-                  className="p-2.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white"
-                >
-                  <Mail className="w-5 h-5" />
-                </a>
-              </div>
-
+          <div className="flex flex-col gap-4 pt-6 border-t border-zinc-800/80">
+            <div className="flex items-center gap-4">
               <a
-                href={personalInfo.resumePath}
-                download="Indla_Mohana_Venkata_Mani_Deep_Resume.pdf"
-                onClick={() => {
-                  handleResumeDownload();
-                  setMobileMenuOpen(false);
-                }}
-                className="btn-cyber-primary flex items-center gap-2 px-5 py-2.5 text-xs uppercase tracking-wider font-bold"
+                href={personalInfo.github}
+                target="_blank"
+                rel="noreferrer"
+                className="p-2.5 rounded-lg bg-zinc-900 text-zinc-300 hover:text-white"
               >
-                <FileDown className="w-4 h-4" />
-                <span>Download Resume</span>
+                <GithubIcon className="w-5 h-5" />
+              </a>
+              <a
+                href={personalInfo.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="p-2.5 rounded-lg bg-zinc-900 text-zinc-300 hover:text-white"
+              >
+                <LinkedinIcon className="w-5 h-5" />
               </a>
             </div>
+
+            <a
+              href={personalInfo.resumePath}
+              download="Indla_Mohana_Venkata_Mani_Deep_Resume.pdf"
+              onClick={() => {
+                handleResumeDownload();
+                setMobileMenuOpen(false);
+              }}
+              className="btn-primary w-full py-3"
+            >
+              <FileDown className="w-4 h-4" />
+              <span>Download Official Resume</span>
+            </a>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

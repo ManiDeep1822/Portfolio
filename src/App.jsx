@@ -6,9 +6,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
 import Projects from './components/Projects';
+import Skills from './components/Skills';
+import About from './components/About';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -59,16 +59,16 @@ export default function App() {
 
     document.addEventListener('click', handleAnchorClick);
 
-    // 4. Cinematic scroll reveal for sections
+    // 4. Subtle scroll reveal for sections
     const sections = document.querySelectorAll('section');
     sections.forEach((section) => {
       gsap.fromTo(
         section,
-        { opacity: 0.85, y: 20 },
+        { opacity: 0.9, y: 15 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: section,
@@ -89,13 +89,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100 selection:bg-emerald-500 selection:text-slate-950">
+    <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-zinc-800 selection:text-white">
       <Navbar />
       <main>
         <Hero />
-        <About />
-        <Skills />
         <Projects />
+        <Skills />
+        <About />
         <Experience />
         <Contact />
       </main>

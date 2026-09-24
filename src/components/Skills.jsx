@@ -1,139 +1,186 @@
 import React, { useState } from 'react';
-import { Sparkles, Code2, Server, Database, Wrench, Layers, Terminal, Cpu, Zap } from 'lucide-react';
-import { skills, skillCategories } from '../data/portfolioData';
+import { 
+  ReactIcon,
+  NodeIcon,
+  ExpressIcon,
+  MongoIcon,
+  PostgresIcon,
+  MySQLIcon,
+  JavaScriptIcon,
+  TypeScriptIcon,
+  PythonIcon,
+  CppIcon,
+  JavaIcon,
+  SocketIOIcon,
+  RazorpayIcon,
+  GoogleIcon,
+  GitIcon,
+  GithubIcon,
+  PostmanIcon,
+  ViteIcon,
+  TailwindIcon,
+  ChartJSIcon,
+  HTML5Icon,
+  CSS3Icon,
+  VercelIcon,
+  TerminalIcon,
+  DatabaseIcon,
+  LayersIcon,
+  CpuIcon,
+  ShieldIcon
+} from './Icons';
 
 export default function Skills() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState('all');
 
-  const filteredSkills = selectedCategory === 'all'
-    ? skills
-    : skills.filter(s => s.category === selectedCategory);
+  const categories = [
+    { id: 'all', label: 'All Technologies' },
+    { id: 'languages', label: 'Languages' },
+    { id: 'frontend', label: 'Frontend' },
+    { id: 'backend', label: 'Backend & Real-Time' },
+    { id: 'databases', label: 'Databases' },
+    { id: 'tools', label: 'Tools & DevOps' },
+  ];
+
+  const skillList = [
+    // Languages
+    { name: 'JavaScript (ES6+)', category: 'languages', icon: JavaScriptIcon, tag: 'Primary', desc: 'Modern async/await, closures, event loop, functional patterns' },
+    { name: 'Python', category: 'languages', icon: PythonIcon, tag: 'Scripting & AI', desc: 'Automation, data parsing, Django backend foundations' },
+    { name: 'C++', category: 'languages', icon: CppIcon, tag: 'Certified', desc: 'Data structures, memory allocation, algorithms (Infosys certified)' },
+    { name: 'Java', category: 'languages', icon: JavaIcon, tag: 'Core OOP', desc: 'Object-oriented architecture, design patterns, multithreading' },
+    { name: 'C', category: 'languages', icon: CppIcon, tag: 'Systems', desc: 'Pointers, low-level OS memory, standard library' },
+
+    // Frontend
+    { name: 'React.js', category: 'frontend', icon: ReactIcon, tag: 'Primary UI', desc: 'Hooks, custom state machines, component lifecycle, virtual DOM' },
+    { name: 'Vite', category: 'frontend', icon: ViteIcon, tag: 'Bundler', desc: 'Ultra-fast HMR, Rollup chunk optimization, tree shaking' },
+    { name: 'Tailwind CSS', category: 'frontend', icon: TailwindIcon, tag: 'Design System', desc: 'Utility-first architectures, responsive grids, custom theme tokens' },
+    { name: 'HTML5 Semantic', category: 'frontend', icon: HTML5Icon, tag: 'Web Standards', desc: 'Accessible DOM semantics, WCAG compliance, SEO optimization' },
+    { name: 'CSS3 & Modern UX', category: 'frontend', icon: CSS3Icon, tag: 'Styling', desc: 'Flexbox, Grid, keyframe animations, media queries' },
+
+    // Backend & Real-Time
+    { name: 'Node.js', category: 'backend', icon: NodeIcon, tag: 'Runtime', desc: 'Event-driven asynchronous I/O, streams, child processes, microservices' },
+    { name: 'Express.js', category: 'backend', icon: ExpressIcon, tag: 'REST Framework', desc: 'Middleware pipelines, route handlers, error barriers, JWT auth' },
+    { name: 'Socket.IO', category: 'backend', icon: SocketIOIcon, tag: 'WebSockets', desc: 'Bi-directional low-latency event communication, room multiplexing' },
+    { name: 'REST Architecture', category: 'backend', icon: TerminalIcon, tag: 'API Design', desc: 'Stateless endpoints, idempotency, status codes, payload contracts' },
+
+    // Databases
+    { name: 'MongoDB', category: 'databases', icon: MongoIcon, tag: 'NoSQL', desc: 'Document schemas, aggregation pipelines, indexing, Atlas clustering' },
+    { name: 'PostgreSQL', category: 'databases', icon: PostgresIcon, tag: 'SQL Relational', desc: 'ACID transactions, relational normalization, complex JOINs' },
+    { name: 'MySQL', category: 'databases', icon: MySQLIcon, tag: 'RDBMS', desc: 'Relational database management, foreign key integrity' },
+
+    // Tools & DevOps
+    { name: 'Git & GitHub', category: 'tools', icon: GitIcon, tag: 'Version Control', desc: 'Branching strategies, interactive rebasing, PR workflows, CI hooks' },
+    { name: 'Postman', category: 'tools', icon: PostmanIcon, tag: 'API Testing', desc: 'Automated test assertions, collection runners, environment variables' },
+    { name: 'Razorpay', category: 'tools', icon: RazorpayIcon, tag: 'Payment Gateway', desc: 'Server-side order creation, webhook verification, signature audits' },
+    { name: 'Google OAuth 2.0', category: 'tools', icon: GoogleIcon, tag: 'Identity & Auth', desc: 'Token validation, consent flows, secure user session management' },
+    { name: 'Vercel Deployment', category: 'tools', icon: VercelIcon, tag: 'Hosting & CI', desc: 'Automated build pipeline optimization, edge caching, env configs' },
+    { name: 'Chart.js', category: 'tools', icon: ChartJSIcon, tag: 'Data Viz', desc: 'Real-time telemetry trend graphs, dynamic data streaming' }
+  ];
+
+  const filteredSkills = activeCategory === 'all'
+    ? skillList
+    : skillList.filter(s => s.category === activeCategory);
 
   return (
-    <section id="skills" className="py-24 relative overflow-hidden bg-slate-950/40">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono mb-4">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>TECHNICAL CAPABILITIES</span>
+    <section id="skills" className="py-24 relative border-t border-zinc-800/80">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <div className="badge-subtle mb-3">
+              <span>Technical Capabilities</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+              Skills & Technologies
+            </h2>
+            <p className="text-zinc-400 text-sm sm:text-base mt-2 max-w-xl">
+              Curated tools and technologies with authentic vector representations, battle-tested across client and systems projects.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display text-white tracking-tight">
-            Comprehensive <span className="text-gradient">Tech Stack</span>
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-400">
-            Engineered across robust languages, real-time protocols, resilient databases, and modern creative web tooling.
-          </p>
+
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-zinc-900 border border-zinc-800">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  activeCategory === cat.id
+                    ? 'bg-zinc-800 text-white shadow-sm'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-          {skillCategories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
-                selectedCategory === cat.id
-                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 shadow-lg shadow-emerald-500/25 scale-105'
-                  : 'bg-slate-900/60 text-slate-400 hover:text-white hover:bg-slate-800/80 border border-white/5'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Skills Grid with 3D Hover & Progress */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filteredSkills.map((skill, index) => (
-            <div
-              key={skill.name}
-              className="glass-card p-5 rounded-2xl border border-white/10 group hover:border-emerald-500/40 transition-all duration-300 relative overflow-hidden"
-            >
-              {/* Subtle top indicator line */}
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-              <div className="flex items-start justify-between gap-3 mb-3">
-                <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 group-hover:text-cyan-300 group-hover:bg-emerald-500/10 transition-colors flex-shrink-0">
-                    <Terminal className="w-5 h-5" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-bold text-white text-base group-hover:text-emerald-300 transition-colors font-display truncate">
-                      {skill.name}
-                    </h3>
-                    <span className="text-[11px] font-mono text-slate-400 capitalize block truncate">
-                      {skill.category}
+        {/* Skills Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filteredSkills.map((skill, idx) => {
+            const IconComponent = skill.icon;
+            return (
+              <div
+                key={idx}
+                className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 transition-all hover:bg-zinc-900/80 group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-9 h-9 rounded-lg bg-zinc-950 border border-zinc-800 flex items-center justify-center group-hover:border-zinc-700 transition-colors">
+                      <IconComponent className="w-5 h-5 text-zinc-300 group-hover:text-white" colored={true} />
+                    </div>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-400">
+                      {skill.tag}
                     </span>
                   </div>
+
+                  <h3 className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors">
+                    {skill.name}
+                  </h3>
+                  <p className="text-xs text-zinc-500 mt-1 leading-relaxed">
+                    {skill.desc}
+                  </p>
                 </div>
 
-                <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 whitespace-nowrap flex-shrink-0">
-                  {skill.tag}
-                </span>
-              </div>
-
-              {/* Progress Bar */}
-              <div className="mt-4">
-                <div className="flex justify-between items-center text-xs font-mono text-slate-400 mb-1.5">
-                  <span>Proficiency</span>
-                  <span className="text-emerald-400 font-bold">{skill.level}%</span>
-                </div>
-                <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full transition-all duration-1000 ease-out group-hover:brightness-125"
-                    style={{ width: `${skill.level}%` }}
-                  />
+                <div className="mt-4 pt-3 border-t border-zinc-800/60 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+                  <span className="capitalize">{skill.category}</span>
+                  <span className="text-zinc-400 group-hover:text-zinc-200 transition-colors">Verified</span>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Architecture Highlights Ribbon */}
-        <div className="mt-16 p-6 sm:p-8 rounded-3xl glass-panel border border-white/10 bg-gradient-to-r from-emerald-950/20 via-slate-900/60 to-cyan-950/20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center sm:text-left">
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
-                <Zap className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="font-bold text-white font-display text-base">Real-Time Concurrency</h4>
-                <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                  Socket.IO room multiplexing, bi-directional order dispatching, and sub-second live state synchronization.
-                </p>
-              </div>
-            </div>
+        {/* Core Computer Science Foundation Callout */}
+        <div className="mt-12 p-6 rounded-2xl bg-zinc-900/30 border border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="max-w-2xl">
+            <h4 className="text-sm font-semibold text-zinc-200 mb-1 flex items-center gap-2">
+              <CpuIcon className="w-4 h-4 text-zinc-400" />
+              <span>Core Computer Science Foundation</span>
+            </h4>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              Formal academic training in Data Structures & Algorithms, Object-Oriented Programming (OOP), Database Management Systems, and Operating Systems at Lovely Professional University.
+            </p>
+          </div>
 
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
-                <Cpu className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="font-bold text-white font-display text-base">Heuristic Anomaly Engine</h4>
-                <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                  Rule-based anomaly detection evaluating concurrent OS process behavior with severity-ranked alerts.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400">
-                <Layers className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="font-bold text-white font-display text-base">MERN Full-Stack Architecture</h4>
-                <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                  Scalable REST APIs, OAuth identity tokens, Razorpay checkout safety, and automated build pipelines.
-                </p>
-              </div>
-            </div>
+          <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+            <span className="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              DSA
+            </span>
+            <span className="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              OOP Concepts
+            </span>
+            <span className="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              OS Fundamentals
+            </span>
+            <span className="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              DBMS Normalization
+            </span>
           </div>
         </div>
+
       </div>
     </section>
   );

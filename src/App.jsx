@@ -4,6 +4,7 @@ import 'lenis/dist/lenis.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { EnterpriseProvider } from './context/EnterpriseContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
@@ -12,6 +13,9 @@ import About from './components/About';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import CommandPalette from './components/CommandPalette';
+import CaseStudyDrawer from './components/CaseStudyDrawer';
+import ResumeModal from './components/ResumeModal';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -89,17 +93,24 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-zinc-800 selection:text-white">
-      <Navbar />
-      <main>
-        <Hero />
-        <Projects />
-        <Skills />
-        <About />
-        <Experience />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <EnterpriseProvider>
+      <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-zinc-800 selection:text-white">
+        <Navbar />
+        <main>
+          <Hero />
+          <Projects />
+          <Skills />
+          <About />
+          <Experience />
+          <Contact />
+        </main>
+        <Footer />
+
+        {/* Enterprise Interactive Overlays */}
+        <CommandPalette />
+        <CaseStudyDrawer />
+        <ResumeModal />
+      </div>
+    </EnterpriseProvider>
   );
 }

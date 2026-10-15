@@ -6,8 +6,18 @@ import {
   ArrowUpRight,
   GithubIcon,
   LinkedinIcon,
-  WhatsAppIcon
+  WhatsAppIcon,
+  CheckIcon
 } from './Icons';
+
+function SpinnerIcon({ className = "w-4 h-4" }) {
+  return (
+    <svg className={`animate-spin ${className}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+    </svg>
+  );
+}
 
 export default function Contact() {
   const { copyEmail, copyPhone, addToast } = useEnterprise();
@@ -17,21 +27,76 @@ export default function Contact() {
     subject: '',
     message: ''
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
+  const [errorMessage, setErrorMessage] = useState('');
+  const [submittedDetails, setSubmittedDetails] = useState({ name: '', email: '', time: '' });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
-    setSubmitted(true);
+    setStatus('submitting');
+    setErrorMessage('');
 
-    addToast({
-      title: 'Direct Inquiry Dispatched',
-      description: `Opening Gmail composer addressed to ${personalInfo.email}`,
-      category: 'SMTP_DISPATCH',
-      status: 'emerald'
-    });
+    const apiKey = personalInfo.web3FormsKey || '1f9e7194-2fbc-4e6f-9511-6ac07aed12af';
 
+    try {
+      const formPayload = new FormData();
+      formPayload.append('access_key', apiKey);
+      formPayload.append('name', formData.name.trim());
+      formPayload.append('email', formData.email.trim());
+      formPayload.append(
+        'subject',
+        formData.subject.trim() || `Engineering Inquiry from ${formData.name.trim()} via Portfolio`
+      );
+      formPayload.append('message', formData.message.trim());
+      formPayload.append('from_name', `${formData.name.trim()} via Portfolio`);
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formPayload
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus('success');
+        setSubmittedDetails({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+
+        addToast({
+          title: 'Inquiry Transmitted to Mani Deep',
+          description: `Direct message delivered to ${personalInfo.email}.`,
+          category: 'DIRECT_INBOX',
+          status: 'emerald'
+        });
+      } else {
+        throw new Error(result.message || 'Unable to deliver message directly.');
+      }
+    } catch (err) {
+      console.error('Web3Forms dispatch error:', err);
+      setStatus('error');
+      setErrorMessage(err.message || 'Network error encountered during direct dispatch.');
+
+      addToast({
+        title: 'Transmission Notice',
+        description: 'Unable to deliver directly. Fallback mail client option available.',
+        category: 'TRANSMISSION_ERROR',
+        status: 'rose'
+      });
+    }
+  };
+
+  const handleReset = () => {
+    setStatus('idle');
+    setErrorMessage('');
+  };
+
+  const handleOpenGmailFallback = () => {
     const recipient = personalInfo.email;
     const subject = encodeURIComponent(
       formData.subject || `Engineering Inquiry from ${formData.name} via Portfolio`
@@ -40,10 +105,7 @@ export default function Contact() {
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
-
-    setTimeout(() => {
-      window.open(gmailUrl, '_blank', 'noopener,noreferrer');
-    }, 350);
+    window.open(gmailUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -190,114 +252,198 @@ export default function Contact() {
           {/* Right Column: Direct Message Composer */}
           <div className="lg:col-span-7">
             <div className="bento-card p-7 sm:p-9">
-              <h3 className="text-lg font-bold text-white mb-2">
-                Send Direct Inquiry
-              </h3>
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
+                <h3 className="text-lg font-bold text-white">
+                  Send Direct Inquiry
+                </h3>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Direct Inbox Delivery
+                </span>
+              </div>
               <p className="text-xs sm:text-sm text-zinc-400 mb-6 leading-relaxed">
-                Formats a structured technical inquiry and opens your mail client addressed directly to{' '}
-                <span className="text-zinc-200 font-medium">{personalInfo.email}</span>.
+                Transmits directly to <span className="text-zinc-200 font-medium">{personalInfo.email}</span> with zero mail client redirection. Response guaranteed within 24 hours.
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label
-                      htmlFor="contact-name"
-                      className="block text-xs font-medium text-zinc-400 mb-2"
-                    >
-                      Your Name
-                    </label>
-                    <input
-                      id="contact-name"
-                      name="name"
-                      type="text"
-                      autoComplete="name"
-                      required
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      placeholder="e.g. Alex Chen"
-                      className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
-                    />
+              {status === 'success' ? (
+                <div className="p-6 sm:p-8 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 text-center space-y-5 animate-in fade-in duration-300">
+                  <div className="w-12 h-12 mx-auto rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                    <CheckIcon className="w-6 h-6" />
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="contact-email"
-                      className="block text-xs font-medium text-zinc-400 mb-2"
+                    <h4 className="text-lg font-bold text-white">
+                      Message Delivered Directly to Inbox
+                    </h4>
+                    <p className="text-xs sm:text-sm text-zinc-400 mt-2 max-w-md mx-auto leading-relaxed">
+                      Thank you, <span className="text-white font-medium">{submittedDetails.name}</span>! Your transmission was recorded at <span className="text-zinc-300 font-mono">{submittedDetails.time}</span> and sent straight to <span className="text-emerald-400 font-medium">{personalInfo.email}</span>.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mx-auto text-left">
+                    <div className="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800 text-xs">
+                      <span className="text-zinc-500 block text-[11px]">Delivery Route</span>
+                      <span className="text-zinc-200 font-mono mt-0.5 block truncate">Direct Web3Forms Relay</span>
+                    </div>
+                    <div className="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800 text-xs">
+                      <span className="text-zinc-500 block text-[11px]">Expected Response</span>
+                      <span className="text-emerald-400 font-mono mt-0.5 block">&lt; 24 Hours</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-xs font-medium text-zinc-200 transition-colors"
                     >
-                      Your Email
-                    </label>
-                    <input
-                      id="contact-email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      placeholder="alex@company.com"
-                      className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
-                    />
+                      <span>Send Another Inquiry</span>
+                    </button>
                   </div>
                 </div>
-
-                <div>
-                  <label
-                    htmlFor="contact-subject"
-                    className="block text-xs font-medium text-zinc-400 mb-2"
-                  >
-                    Subject / Role
-                  </label>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Honeypot Spam Protection */}
                   <input
-                    id="contact-subject"
-                    name="subject"
-                    type="text"
+                    type="checkbox"
+                    name="botcheck"
+                    className="hidden"
+                    style={{ display: 'none' }}
+                    tabIndex={-1}
                     autoComplete="off"
-                    value={formData.subject}
-                    onChange={(e) =>
-                      setFormData({ ...formData, subject: e.target.value })
-                    }
-                    placeholder="e.g. Software Engineer Role / Full-Stack Internship"
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
                   />
-                </div>
 
-                <div>
-                  <label
-                    htmlFor="contact-message"
-                    className="block text-xs font-medium text-zinc-400 mb-2"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    name="message"
-                    rows={4}
-                    required
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    placeholder="Outline your team, role requirements, or project scope..."
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors resize-none"
-                  />
-                </div>
+                  {status === 'error' && (
+                    <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <span>{errorMessage || 'Direct delivery encountered an issue.'}</span>
+                      <button
+                        type="button"
+                        onClick={handleOpenGmailFallback}
+                        className="underline text-white font-semibold hover:text-rose-200 shrink-0 self-start sm:self-auto"
+                      >
+                        Open Gmail directly →
+                      </button>
+                    </div>
+                  )}
 
-                <div className="pt-2 flex flex-wrap items-center justify-between gap-4">
-                  <span className="text-xs text-zinc-500">
-                    Direct dispatch via Gmail / Mail client
-                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label
+                        htmlFor="contact-name"
+                        className="block text-xs font-medium text-zinc-400 mb-2"
+                      >
+                        Your Name
+                      </label>
+                      <input
+                        id="contact-name"
+                        name="name"
+                        type="text"
+                        autoComplete="name"
+                        required
+                        disabled={status === 'submitting'}
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
+                        placeholder="e.g. Alex Chen"
+                        className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors disabled:opacity-60"
+                      />
+                    </div>
 
-                  <button type="submit" className="btn-primary px-6 py-3">
-                    <span>{submitted ? 'Inquiry Dispatched' : 'Dispatch Message'}</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </form>
+                    <div>
+                      <label
+                        htmlFor="contact-email"
+                        className="block text-xs font-medium text-zinc-400 mb-2"
+                      >
+                        Your Email
+                      </label>
+                      <input
+                        id="contact-email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        disabled={status === 'submitting'}
+                        value={formData.email}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
+                        placeholder="alex@company.com"
+                        className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors disabled:opacity-60"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="contact-subject"
+                      className="block text-xs font-medium text-zinc-400 mb-2"
+                    >
+                      Subject / Role
+                    </label>
+                    <input
+                      id="contact-subject"
+                      name="subject"
+                      type="text"
+                      autoComplete="off"
+                      disabled={status === 'submitting'}
+                      value={formData.subject}
+                      onChange={(e) =>
+                        setFormData({ ...formData, subject: e.target.value })
+                      }
+                      placeholder="e.g. Software Engineer Role / Full-Stack Internship"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors disabled:opacity-60"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="contact-message"
+                      className="block text-xs font-medium text-zinc-400 mb-2"
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      name="message"
+                      rows={4}
+                      required
+                      disabled={status === 'submitting'}
+                      value={formData.message}
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value })
+                      }
+                      placeholder="Outline your team, role requirements, or project scope..."
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors resize-none disabled:opacity-60"
+                    />
+                  </div>
+
+                  <div className="pt-2 flex flex-wrap items-center justify-between gap-4">
+                    <span className="text-xs text-zinc-500 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      Direct inbox transmission (no client redirect)
+                    </span>
+
+                    <button
+                      type="submit"
+                      disabled={status === 'submitting'}
+                      className="btn-primary px-6 py-3 disabled:opacity-60 disabled:cursor-not-allowed inline-flex items-center gap-2"
+                    >
+                      {status === 'submitting' ? (
+                        <>
+                          <SpinnerIcon className="w-4 h-4 text-zinc-950" />
+                          <span>Transmitting Message...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Dispatch Message</span>
+                          <ArrowUpRight className="w-4 h-4" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         </div>

@@ -17,7 +17,8 @@ export const personalInfo = {
   resumeDownloadName: "Indla_Mohana_Venkata_Mani_Deep_Resume.pdf",
   photoPath: "/Photo.jpg",
   avatarFallback: "MD",
-  availability: "Available for Software Engineering Roles & Internships"
+  availability: "Available for Software Engineering Roles & Internships",
+  web3FormsKey: "1f9e7194-2fbc-4e6f-9511-6ac07aed12af"
 };
 
 export const stats = [

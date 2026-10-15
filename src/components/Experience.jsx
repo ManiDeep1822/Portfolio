@@ -1,7 +1,7 @@
 import React from 'react';
 import { experiences, certifications } from '../data/portfolioData';
 import { useEnterprise } from '../context/EnterpriseContext';
-import { AwardIcon, CheckIcon, EyeIcon } from './Icons';
+import { AwardIcon, CheckIcon, EyeIcon, ExternalLink } from './Icons';
 
 export default function Experience() {
   const { openResumeModal } = useEnterprise();
@@ -47,9 +47,21 @@ export default function Experience() {
                   <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                          {exp.badge}
-                        </span>
+                        {exp.credentialUrl ? (
+                          <a
+                            href={exp.credentialUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors"
+                          >
+                            <span>{exp.badge}</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ) : (
+                          <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            {exp.badge}
+                          </span>
+                        )}
                         {exp.metrics?.map((m, mIdx) => (
                           <span
                             key={mIdx}
@@ -91,6 +103,21 @@ export default function Experience() {
                       ))}
                     </ul>
                   )}
+
+                  {exp.credentialUrl && (
+                    <div className="mt-5 pt-4 border-t border-zinc-800/80 flex items-center justify-between">
+                      <span className="text-xs text-zinc-400">Verified Training Credential</span>
+                      <a
+                        href={exp.credentialUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
+                      >
+                        <span>View Certificate</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -125,6 +152,17 @@ export default function Experience() {
                         <p className="text-xs font-medium text-zinc-300">
                           Issued by {cert.issuer}
                         </p>
+                        {cert.credentialUrl && (
+                          <a
+                            href={cert.credentialUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+                          >
+                            <span>Verify</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
                       </div>
 
                       <div className="flex flex-wrap gap-1.5 mt-3.5">

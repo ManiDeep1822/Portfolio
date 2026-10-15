@@ -157,7 +157,7 @@ export const verifyPaymentAndDispatch = async (req, res, io) => {
 };`
     },
     githubUrl: "https://github.com/ManiDeep1822/CampusEats",
-    liveUrl: "https://campuseats-demo.vercel.app"
+    liveUrl: "https://campus-eats-drab.vercel.app/"
   },
   {
     id: "process-optima",
@@ -261,7 +261,7 @@ export const verifyPaymentAndDispatch = async (req, res, io) => {
   };
 }`
     },
-    githubUrl: "https://github.com/ManiDeep1822/ProcessOptima",
+    githubUrl: "https://github.com/ManiDeep1822/AI-System-Process-Analyzer",
     liveUrl: null
   },
   {
@@ -295,7 +295,7 @@ export const verifyPaymentAndDispatch = async (req, res, io) => {
     architecture: {
       overview: "Static-first React architecture deployed on a global edge CDN with custom DNS, pairing instant client-side catalog filtering with deep-linked WhatsApp Business API conversion intents.",
       nodes: [
-        { id: "cdn", title: "Custom Domain & Edge CDN", tech: "sriadithyafurniture.com", detail: "Brotli/Gzip asset delivery & SSL termination" },
+        { id: "cdn", title: "Custom Domain & Edge CDN", tech: "sriadithyafurniture.shop", detail: "Brotli/Gzip asset delivery & SSL termination" },
         { id: "catalog", title: "React Responsive Catalog", tech: "React.js + Tailwind CSS", detail: "Zero-latency category filtering across 20+ SKUs" },
         { id: "media", title: "Optimized Media Pipeline", tech: "WebP + Lazy Hydration", detail: "~80% image payload reduction vs raw JPEG" },
         { id: "wa", title: "WhatsApp Intent Router", tech: "wa.me Deep-Link Protocol", detail: "Pre-formatted SKU inquiry payload generation" }
@@ -347,7 +347,7 @@ export const verifyPaymentAndDispatch = async (req, res, io) => {
 }`
     },
     githubUrl: null,
-    liveUrl: "https://sriadithyafurniture.com"
+    liveUrl: "https://sriadithyafurniture.shop/"
   }
 ];
 
@@ -603,6 +603,7 @@ export const experiences = [
     location: "Remote / India",
     badge: "Verified Certificate",
     metrics: ["5+ UI Components Engineered", "10+ Cross-Browser Bugs Resolved"],
+    credentialUrl: "https://drive.google.com/file/d/1h2hpCeFGSd8d1_2L0r0coASk_UvH8TW1/view?usp=sharing",
     description: "Completed intensive hands-on frontend engineering training focused on responsive, production-grade web interfaces across desktop, tablet, and mobile viewports.",
     highlights: [
       "Developed responsive and user-friendly web applications using semantic HTML5, modern CSS3, and JavaScript (ES6+), ensuring consistent UI and accessibility across devices.",
@@ -634,6 +635,7 @@ export const certifications = [
     issuer: "Infosys Springboard",
     date: "Sep 2025",
     credentialCode: "INFOSYS-CPP-2025",
+    credentialUrl: "https://drive.google.com/file/d/1PcNoJEKdud2FvfF_1QZPfpBLh9HJyvPy/view?usp=sharing",
     topics: ["Object-Oriented Programming", "STL & Data Structures", "Memory Management", "Algorithmic Optimization"],
     verified: true
   },
@@ -643,6 +645,7 @@ export const certifications = [
     issuer: "Udemy",
     date: "Oct 2024",
     credentialCode: "UDEMY-PYDJ-2024",
+    credentialUrl: "https://drive.google.com/file/d/1xJoJ9JpYGpJUSDjVny99UMcstvWwwKU-/view?usp=sharing",
     topics: ["Python Core & Scripting", "Django MVC Architecture", "ORM & Database Migrations", "RESTful Routing"],
     verified: true
   },
@@ -652,6 +655,7 @@ export const certifications = [
     issuer: "CodingTantra",
     date: "Mar 2024",
     credentialCode: "CT-ETM-2024",
+    credentialUrl: "https://drive.google.com/file/d/1xIwBlWBChitpMNf99FGDHTQfYtthH_y6/view?usp=sharing",
     topics: ["Agile Sprint Planning", "Priority Matrix Execution", "Deep Work Systems"],
     verified: true
   }
